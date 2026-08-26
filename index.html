@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Deal Reel — pull &amp; pitch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --felt:#0C3A2D;
+    --felt-dk:#06231C;
+    --felt-lt:#12503E;
+    --brass:#C79A3F;
+    --brass-lt:#E8CE8A;
+    --bone:#F3EDE0;
+    --bone-dim:#DCD3C0;
+    --oxblood:#8C2B22;
+    --ink:#14100C;
+    --display:'Archivo Black', 'Arial Black', sans-serif;
+    --body:'Inter', system-ui, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(120% 80% at 50% -10%, #14563F 0%, var(--felt) 40%, var(--felt-dk) 100%);
+    color:var(--bone);
+    font-family:var(--body);
+    min-height:100vh;
+    padding:28px 16px 64px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1020px;margin:0 auto}
+
+  /* header */
+  header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+  h1{
+    font-family:var(--display);
+    font-size:clamp(30px,6vw,52px);
+    line-height:.92;
+    letter-spacing:-.02em;
+    margin:0;
+    color:var(--bone);
+    text-transform:uppercase;
+  }
+  h1 em{font-style:normal;color:var(--brass-lt);display:block;font-size:.42em;letter-spacing:.22em;margin-top:10px}
+  .meta{font-family:var(--mono);font-size:12px;color:var(--bone-dim);text-align:right;line-height:1.7}
+  .meta b{color:var(--brass-lt);font-weight:600}
+
+  /* cabinet */
+  .cabinet{
+    background:linear-gradient(180deg,#0F4636 0%, #0A3128 100%);
+    border:2px solid var(--brass);
+    border-radius:14px;
+    box-shadow:0 0 0 6px rgba(199,154,63,.12), 0 26px 60px rgba(0,0,0,.45);
+    padding:22px;
+    position:relative;
+  }
+  .cabinet::before{
+    content:"";position:absolute;inset:8px;border:1px solid rgba(232,206,138,.22);border-radius:8px;pointer-events:none
+  }
+
+  .machine{display:flex;gap:20px;align-items:stretch}
+  .reels{flex:1;min-width:0}
+  .reelrow{display:grid;grid-template-columns:1fr 1fr .8fr;gap:10px}
+  @media(max-width:660px){.reelrow{grid-template-columns:1fr}}
+  .reel{
+    background:var(--bone);
+    color:var(--ink);
+    border-radius:6px;
+    padding:14px 14px 12px;
+    min-height:104px;
+    display:flex;flex-direction:column;justify-content:center;
+    position:relative;overflow:hidden;
+    box-shadow:inset 0 10px 18px -12px rgba(0,0,0,.55), inset 0 -10px 18px -12px rgba(0,0,0,.55);
+  }
+  .reel .lab{
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+    color:#8A8272;margin-bottom:7px
+  }
+  .reel .val{
+    font-family:var(--display);font-size:20px;line-height:1.08;text-transform:uppercase;letter-spacing:-.01em;
+    word-break:break-word;
+  }
+  .reel.money .val{font-family:var(--mono);font-weight:600;font-size:24px;letter-spacing:-.02em}
+  .reel.spin .val{opacity:.55;filter:blur(.4px)}
+  .payline{height:2px;background:var(--oxblood);margin:12px 0;opacity:.75;border-radius:2px}
+
+  /* lever */
+  .leverbay{width:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+  @media(max-width:660px){.machine{flex-direction:column-reverse}.leverbay{width:100%;flex-direction:row}}
+  .lever{
+    background:none;border:0;cursor:pointer;padding:0;
+    display:flex;flex-direction:column;align-items:center;
+  }
+  .lever svg{display:block;transition:transform .18s cubic-bezier(.2,.8,.3,1);transform-origin:50% 100%}
+  .lever:active svg,.lever.pulled svg{transform:rotate(26deg)}
+  .lever:focus-visible{outline:2px solid var(--brass-lt);outline-offset:6px;border-radius:8px}
+  .leverlab{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--brass-lt);margin-top:8px;text-transform:uppercase}
+
+  /* deal detail */
+  .slip{
+    margin-top:18px;background:var(--bone);color:var(--ink);border-radius:8px;padding:18px 18px 16px;
+    display:none;
+  }
+  .slip.on{display:block}
+  .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+  .tag{
+    font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+    border:1px solid rgba(20,16,12,.28);border-radius:99px;padding:4px 9px;color:#3A3428
+  }
+  .tag.hot{background:var(--oxblood);border-color:var(--oxblood);color:#fff}
+  .slipgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:660px){.slipgrid{grid-template-columns:1fr}}
+  .slipgrid h3{
+    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8A8272;
+    margin:0 0 6px
+  }
+  .slipgrid p{margin:0;font-size:14.5px;line-height:1.55}
+  .curve{border-left:3px solid var(--oxblood);padding-left:12px}
+  .hidden-until{filter:blur(5px);user-select:none;cursor:pointer}
+  .hidden-until::after{content:""}
+
+  /* timer */
+  .clockbar{
+    margin-top:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    border-top:1px solid rgba(232,206,138,.22);padding-top:16px
+  }
+  .clock{font-family:var(--mono);font-size:40px;font-weight:600;letter-spacing:-.02em;color:var(--bone);min-width:132px}
+  .clock.pitch{color:var(--brass-lt)}
+  .clock.done{color:var(--oxblood)}
+  .phase{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-dim)}
+  .btn{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+    background:transparent;color:var(--brass-lt);border:1px solid var(--brass);
+    padding:9px 14px;border-radius:4px;cursor:pointer;transition:background .15s,color .15s
+  }
+  .btn:hover{background:var(--brass);color:var(--ink)}
+  .btn:focus-visible{outline:2px solid var(--brass-lt);outline-offset:3px}
+  .btn.solid{background:var(--brass);color:var(--ink);font-weight:600}
+  .btn.solid:hover{background:var(--brass-lt)}
+  .spacer{flex:1}
+
+  /* filters */
+  .filters{margin:24px 0 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .chip{
+    font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    border:1px solid rgba(232,206,138,.35);color:var(--bone-dim);background:transparent;
+    padding:7px 12px;border-radius:99px;cursor:pointer
+  }
+  .chip[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:var(--ink);font-weight:600}
+  .chip:focus-visible{outline:2px solid var(--brass-lt);outline-offset:3px}
+  .fgroup{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7FA394;margin-right:2px}
+
+  /* list */
+  details.book{margin-top:26px;border-top:1px solid rgba(232,206,138,.22);padding-top:16px}
+  details.book summary{
+    font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-lt);
+    cursor:pointer;list-style:none
+  }
+  details.book summary::-webkit-details-marker{display:none}
+  details.book summary::before{content:"▸ ";}
+  details.book[open] summary::before{content:"▾ ";}
+  table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid rgba(232,206,138,.14);vertical-align:top}
+  th{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#7FA394;font-weight:400}
+  td.n{font-family:var(--mono);white-space:nowrap;color:var(--brass-lt)}
+  tr:hover td{background:rgba(232,206,138,.06)}
+  .search{
+    font-family:var(--mono);font-size:12px;background:rgba(0,0,0,.25);border:1px solid rgba(232,206,138,.3);
+    color:var(--bone);padding:8px 12px;border-radius:4px;margin-top:12px;width:240px;max-width:100%
+  }
+  .search:focus-visible{outline:2px solid var(--brass-lt);outline-offset:2px}
+
+  footer{margin-top:30px;font-family:var(--mono);font-size:11px;line-height:1.8;color:#7FA394}
+  footer b{color:var(--bone-dim);font-weight:400}
+  kbd{
+    font-family:var(--mono);font-size:10px;border:1px solid rgba(232,206,138,.4);border-radius:3px;
+    padding:1px 5px;color:var(--brass-lt)
+  }
+  @media (prefers-reduced-motion: reduce){
+    .lever svg{transition:none}
+    .reel.spin .val{filter:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Deal Reel<em>pull &middot; research &middot; pitch</em></h1>
+    <div class="meta">
+      <b id="deckCount">0</b> deals loaded<br>
+      <span id="poolCount">0</span> in the current pool<br>
+      <span id="pulled">0</span> pulled this session
+    </div>
+  </header>
+
+  <div class="cabinet">
+    <div class="machine">
+      <div class="reels">
+        <div class="reelrow">
+          <div class="reel" id="r1"><div class="lab">Acquirer</div><div class="val" id="v1">—</div></div>
+          <div class="reel" id="r2"><div class="lab">Target</div><div class="val" id="v2">—</div></div>
+          <div class="reel money" id="r3"><div class="lab">Headline value</div><div class="val" id="v3">—</div></div>
+        </div>
+        <div class="payline"></div>
+        <div class="clockbar">
+          <div class="clock" id="clock">10:00</div>
+          <div>
+            <div class="phase" id="phase">idle</div>
+            <div class="phase" style="color:#7FA394;margin-top:4px" id="phasehint">pull the lever to start</div>
+          </div>
+          <div class="spacer"></div>
+          <button class="btn solid" id="startBtn">Start</button>
+          <button class="btn" id="skipBtn">Go to pitch</button>
+          <button class="btn" id="resetBtn">Reset clock</button>
+        </div>
+      </div>
+
+      <div class="leverbay">
+        <button class="lever" id="lever" aria-label="Pull the lever for a new deal">
+          <svg width="46" height="120" viewBox="0 0 46 120" aria-hidden="true">
+            <rect x="20" y="18" width="6" height="98" rx="3" fill="#C79A3F"/>
+            <rect x="20" y="18" width="2.5" height="98" fill="#E8CE8A"/>
+            <circle cx="23" cy="14" r="14" fill="#8C2B22"/>
+            <circle cx="19" cy="10" r="4.5" fill="#C2564B" opacity=".85"/>
+            <ellipse cx="23" cy="116" rx="12" ry="4" fill="#06231C"/>
+          </svg>
+          <span class="leverlab">Pull</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="slip" id="slip">
+      <div class="tags" id="tags"></div>
+      <div class="slipgrid">
+        <div>
+          <h3>Situation</h3>
+          <p id="angle"></p>
+        </div>
+        <div class="curve">
+          <h3>Curveball they'll throw</h3>
+          <p id="curve" class="hidden-until" title="Click to reveal"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="filters" id="filters"></div>
+
+  <details class="book">
+    <summary>The whole book</summary>
+    <input class="search" id="search" placeholder="filter by name, sector, year…" />
+    <table>
+      <thead><tr><th>Date</th><th>Acquirer</th><th>Target</th><th>Value</th><th>Sector</th><th>Type</th></tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </details>
+
+  <footer>
+    <b>How to run it:</b> pull → 10 minutes to build a view → 60 seconds to deliver it out loud, standing up.<br>
+    <b>The 60 seconds:</b> what happened (10s) · why they did it (15s) · how it was paid for (10s) · your view (15s) · the main risk (10s).<br>
+    <b>Keys:</b> <kbd>space</kbd> pull · <kbd>s</kbd> start/pause · <kbd>r</kbd> reset<br>
+    <b>Health warning:</b> values are headline / enterprise value around announcement and some deals moved after. Check the FT before you quote a number in a room.
+  </footer>
+</div>
+
+<script>
+const DEALS = [
+/* ---------- 2026 ---------- */
+{a:"Paramount Skydance",t:"Warner Bros. Discovery",v:"~$110bn",d:"2026",s:"Media",r:"US",k:"Strategic",diff:1,
+ angle:"Two of the largest studio and streaming libraries under one roof after a long contested process. Scale as the answer to Netflix.",
+ curve:"Where do the synergies actually come from, and what does the regulator make of CNN?"},
+{a:"McCormick",t:"Unilever foods business",v:"$44.8bn EV",d:"Mar 2026",s:"Consumer",r:"Cross-border",k:"Carve-out",diff:1,
+ angle:"Knorr and Hellmann's leave Unilever so it can be a beauty and personal care company. McCormick roughly doubles in size.",
+ curve:"Why does a 22%-margin business get sold? Talk me through growth versus margin."},
+{a:"BlackRock (GIP) &amp; EQT",t:"AES Corporation",v:"$33.4bn",d:"Mar 2026",s:"Power",r:"US",k:"Sponsor",diff:2,
+ angle:"Take-private of a utility and renewables platform. The real asset being bought is grid access for data centre demand.",
+ curve:"How do you underwrite a regulated utility LBO when rates aren't near zero?"},
+{a:"Kone",t:"TK Elevator",v:"€29.4bn",d:"2026",s:"Industrials",r:"Europe",k:"Sponsor exit",diff:2,
+ angle:"Advent and Cinven exit the business they bought from Thyssenkrupp in 2020. Would create the world's largest lift maker.",
+ curve:"Antitrust in a market with four players. What do they have to divest?"},
+{a:"Intesa Sanpaolo",t:"Monte dei Paschi di Siena",v:"€34.5bn",d:"2026",s:"FIG",r:"Italy",k:"Contested",diff:3,
+ angle:"Cash and shares offer for the bank that needed a state bailout a decade ago. MPS is fighting rather than folding.",
+ curve:"Why do European bank mergers keep stalling? Name the political blockers."},
+{a:"Monte dei Paschi",t:"Banco BPM",v:"€25.3bn",d:"Aug 2026",s:"FIG",r:"Italy",k:"Defensive",diff:3,
+ angle:"The defence: MPS bids for Banco BPM and Banca Generali to become Italy's third force rather than be absorbed.",
+ curve:"Is an all-share defensive acquisition ever in shareholders' interest?"},
+{a:"Prologis",t:"Segro",v:"£14.3bn",d:"Aug 2026",s:"Real estate",r:"UK",k:"Cross-border",diff:2,
+ angle:"US logistics giant lands a European warehouse platform after repeated rejections. The data centre pipeline is half the story.",
+ curve:"How do you value a REIT? Why is NAV not the whole answer here?"},
+{a:"Nuveen",t:"Schroders",v:"£9.9bn",d:"2026",s:"Asset mgmt",r:"UK",k:"Cross-border",diff:2,
+ angle:"222 years of independence ends. Creates roughly $2.5tn AUM. The founding family with ~41% agreed to sell.",
+ curve:"Why is mid-sized active management structurally dying?"},
+{a:"EQT",t:"Intertek",v:"£9.4bn",d:"2026",s:"Business svcs",r:"UK",k:"Take-private",diff:2,
+ angle:"Testing and certification taken private after shareholders decided the public market was never going to pay up.",
+ curve:"Why are sponsors able to pay more than the market for TIC assets?"},
+{a:"Apollo",t:"easyJet",v:"£5.7bn",d:"2026",s:"Airlines",r:"UK",k:"Contested",diff:2,
+ angle:"Apollo outbids Castlelake for an airline that had called earlier approaches opportunistic. Classic cheap-London situation.",
+ curve:"How do you LBO an airline? What does the aircraft fleet do to the debt capacity?"},
+{a:"Engie",t:"UK Power Networks",v:"$14.2bn",d:"Feb 2026",s:"Utilities",r:"UK",k:"Infrastructure",diff:2,
+ angle:"CK Group sells the distribution network serving London and the southeast. Regulated cash flows at scale.",
+ curve:"How does Ofgem's RIIO price control affect what a buyer will pay?"},
+{a:"Santander",t:"Webster Financial",v:"$12.2bn",d:"Feb 2026",s:"FIG",r:"Cross-border",k:"Strategic",diff:3,
+ angle:"Spanish bank buys further into US retail and commercial banking. Long-stated North America ambition finally funded.",
+ curve:"Cross-border bank M&amp;A destroys value more often than not. Why do it?"},
+{a:"Boston Scientific",t:"Penumbra",v:"$14.6bn",d:"Jan 2026",s:"Medtech",r:"US",k:"Strategic",diff:2,
+ angle:"$374 a share, roughly 73% cash and 27% stock. Penumbra runs on as a standalone unit inside cardiovascular.",
+ curve:"Why part-stock? What does the mix tell you about how the buyer sees its own valuation?"},
+{a:"Sun Pharma",t:"Organon",v:"$11.75bn",d:"Apr 2026",s:"Pharma",r:"Cross-border",k:"Strategic",diff:2,
+ angle:"India's largest pharma buys the Merck spin-off at $14.00 cash to build women's health and biosimilars.",
+ curve:"The deck says 103% premium, one-day premium is ~24%. Which is honest and why?"},
+{a:"Devon Energy",t:"Coterra Energy",v:"All-stock merger",d:"May 2026",s:"Energy",r:"US",k:"Merger",diff:2,
+ angle:"Permian consolidation continues. Completed with an $8bn buyback attached, so the pitch is capital discipline not growth.",
+ curve:"Why all-stock? What does that imply about where they think oil goes?"},
+{a:"SpaceX",t:"xAI",v:"Undisclosed",d:"2026",s:"Tech",r:"US",k:"Related party",diff:3,
+ angle:"The largest acquisition of a venture-backed company ever, and both sides were controlled by the same person.",
+ curve:"No price, no exchange ratio, no independent committee disclosed. What's the governance problem?"},
+{a:"Mari (Ari Emanuel)",t:"ATG Entertainment",v:"$6bn",d:"Aug 2026",s:"Live ent.",r:"Cross-border",k:"Sponsor exit",diff:3,
+ angle:"Providence Equity exits the Broadway and West End theatre operator. Live experiences as a hard-to-replicate asset class.",
+ curve:"How do you value a business whose inventory is seats on one specific night?"},
+{a:"AIG &amp; Onex",t:"Convex Group",v:"$7bn",d:"2026",s:"Insurance",r:"Cross-border",k:"Consortium",diff:3,
+ angle:"A strategic carrier and a sponsor buying together. Specialty insurance capacity is the thing being acquired.",
+ curve:"Why partner with a sponsor rather than buy it outright?"},
+{a:"Madison Air",t:"Airflow Technologies",v:"$5.4bn",d:"Aug 2026",s:"Industrials",r:"US",k:"Strategic",diff:3,
+ angle:"Air movement and filtration consolidation. Boring on the surface, very exposed to data centre cooling demand.",
+ curve:"Which end market is really being bought here?"},
+{a:"Deutsche Telekom",t:"Fiberhost &amp; Inea",v:"~€1bn",d:"Aug 2026",s:"Telecom",r:"Europe",k:"Infrastructure",diff:3,
+ angle:"Buying Polish fibre from Macquarie. Telcos buying back the infrastructure funds bought from them a cycle ago.",
+ curve:"Why did telcos sell their towers and fibre, and why are they buying it back?"},
+
+/* ---------- 2025 ---------- */
+{a:"Union Pacific",t:"Norfolk Southern",v:"~$85bn",d:"Jul 2025",s:"Transport",r:"US",k:"Merger",diff:1,
+ angle:"An attempt at America's first true transcontinental railroad. The largest deal of its year by some distance.",
+ curve:"Surface Transportation Board approval. What's the public interest test?"},
+{a:"Google",t:"Wiz",v:"$32bn",d:"Mar 2025",s:"Cyber",r:"US",k:"Strategic",diff:1,
+ angle:"All cash for a cloud security business barely five years old. Google buying multi-cloud credibility it couldn't build.",
+ curve:"$32bn on what revenue? Justify the multiple, then argue the other side."},
+{a:"Palo Alto Networks",t:"CyberArk",v:"~$25bn",d:"Jul 2025",s:"Cyber",r:"Cross-border",k:"Strategic",diff:2,
+ angle:"Identity security bolted onto the platform. Consolidation of a security stack customers were tired of assembling themselves.",
+ curve:"Platform consolidation versus best-of-breed. Which wins in enterprise software and why?"},
+{a:"Charter Communications",t:"Cox Communications",v:"~$34.5bn",d:"May 2025",s:"Telecom",r:"US",k:"Merger",diff:2,
+ angle:"Cable consolidating in a shrinking market. Scale to defend broadband against fixed wireless and fibre.",
+ curve:"Is buying scale in a declining industry value creation or just slower decline?"},
+{a:"Constellation Energy",t:"Calpine",v:"~$26.6bn",d:"Jan 2025",s:"Power",r:"US",k:"Strategic",diff:2,
+ angle:"Nuclear plus gas generation combined right as AI demand made dispatchable power the scarcest thing in the market.",
+ curve:"Why is a power purchase agreement with a hyperscaler worth so much?"},
+{a:"Global Payments",t:"Worldpay",v:"$24.25bn",d:"Apr 2025",s:"Fintech",r:"Cross-border",k:"Strategic",diff:2,
+ angle:"Merchant acquiring consolidation, with an asset swap attached. Worldpay changes hands yet again.",
+ curve:"Worldpay has been bought and sold repeatedly at wildly different values. What does that tell you?"},
+{a:"Abbott",t:"Exact Sciences",v:"$22.5bn",d:"Nov 2025",s:"Medtech",r:"US",k:"Strategic",diff:2,
+ angle:"Cancer diagnostics at scale. Buying a screening franchise rather than waiting on internal R&amp;D.",
+ curve:"Diagnostics reimbursement risk. How does that hit your DCF?"},
+{a:"Blackstone, ADIA, GIC &amp; TPG",t:"Hologic",v:"$18.4bn",d:"Oct 2025",s:"Healthcare",r:"US",k:"Consortium",diff:3,
+ angle:"Club deal take-private of a women's health device maker. Sovereign wealth alongside two of the biggest sponsors.",
+ curve:"Why club up? What does each member of that consortium actually bring?"},
+{a:"Anglo American",t:"Teck Resources",v:"~$50bn",d:"Sep 2025",s:"Mining",r:"Cross-border",k:"Merger of equals",diff:2,
+ angle:"Copper-led merger of equals, a year after Anglo fought off BHP. Structure and domicile mattered as much as price.",
+ curve:"A merger of equals has no premium. So how do the boards sell it?"},
+{a:"Chevron",t:"Hess",v:"$53bn",d:"Closed Jul 2025",s:"Energy",r:"US",k:"Strategic",diff:1,
+ angle:"Completed only after Exxon's arbitration claim over the Guyana asset failed. The prize was always Stabroek.",
+ curve:"A right of first refusal nearly killed a $53bn deal. How do you diligence that?"},
+{a:"Nippon Steel",t:"U.S. Steel",v:"$14.9bn",d:"Closed Jun 2025",s:"Steel",r:"Cross-border",k:"Political",diff:2,
+ angle:"Blocked, litigated, then cleared with a golden share for the US government. National security as deal terms.",
+ curve:"What is CFIUS, and what does a golden share do to the buyer's control?"},
+{a:"Synopsys",t:"Ansys",v:"$35bn",d:"Closed Jul 2025",s:"Software",r:"US",k:"Strategic",diff:2,
+ angle:"Chip design software buys simulation. Took eighteen months and divestitures in two jurisdictions to get through.",
+ curve:"Why do long regulatory timelines change the price a buyer is willing to pay?"},
+{a:"Capital One",t:"Discover",v:"~$35bn",d:"Closed May 2025",s:"FIG",r:"US",k:"Strategic",diff:1,
+ angle:"An issuer buys a payments network. Vertical integration in cards, and the reason it cleared is the network.",
+ curve:"Interchange economics. Who actually captures the value in a card transaction?"},
+{a:"Mars",t:"Kellanova",v:"$36bn",d:"Closed 2025",s:"Consumer",r:"US",k:"Strategic",diff:2,
+ angle:"Private family business buys a listed snacking company all cash. Pringles joins M&amp;Ms.",
+ curve:"How does a private acquirer finance $36bn, and what's the advantage of no public shareholders?"},
+{a:"Kimberly-Clark",t:"Kenvue",v:"~$48.7bn",d:"Nov 2025",s:"Consumer health",r:"US",k:"Strategic",diff:2,
+ angle:"Two years after being spun out of J&amp;J, Kenvue is bought. Tylenol litigation overhang priced into the deal.",
+ curve:"How do you price litigation risk into an offer?"},
+{a:"Waters Corp",t:"BD Biosciences &amp; Diagnostics",v:"~$17.5bn",d:"Jul 2025",s:"Life sciences",r:"US",k:"Reverse Morris Trust",diff:3,
+ angle:"A carve-out structured as a Reverse Morris Trust, so BD shareholders end up owning most of the combined company.",
+ curve:"Explain a Reverse Morris Trust and why anyone bothers with the complexity."},
+{a:"Pfizer",t:"Metsera",v:"~$10bn",d:"Nov 2025",s:"Pharma",r:"US",k:"Bidding war",diff:3,
+ angle:"Won after a public fight with Novo Nordisk over an obesity drug developer. Price moved a long way from the first bid.",
+ curve:"When should a board walk away from a contested auction?"},
+{a:"Novartis",t:"Avidity Biosciences",v:"~$12bn",d:"Oct 2025",s:"Biotech",r:"US",k:"Strategic",diff:3,
+ angle:"Big pharma buying a clinical-stage platform to fill the patent cliff. No approved product, all pipeline.",
+ curve:"How do you value a company with no revenue? Walk me through risk-adjusted NPV."},
+{a:"Baker Hughes",t:"Chart Industries",v:"$13.6bn",d:"2025",s:"Energy svcs",r:"US",k:"Strategic",diff:3,
+ angle:"Gas technology and LNG equipment. Baker Hughes moving further from the drill bit toward industrial energy.",
+ curve:"Is this diversification or diworsification? Argue both."},
+{a:"Thoma Bravo",t:"Dayforce",v:"$12.3bn",d:"2025",s:"Software",r:"US",k:"Take-private",diff:3,
+ angle:"HR software taken private. Recurring revenue and high gross margin, which is why software LBOs still clear.",
+ curve:"How much leverage will lenders put on an ARR business, and on what metric?"},
+{a:"Salesforce",t:"Informatica",v:"~$8bn",d:"2025",s:"Software",r:"US",k:"Strategic",diff:3,
+ angle:"Data management bought to feed the AI layer. Salesforce returning to large M&amp;A after activist pressure to stop.",
+ curve:"Activists told them to stop buying things. What changed the argument?"},
+{a:"DoorDash",t:"Deliveroo",v:"£2.9bn",d:"2025",s:"Consumer tech",r:"UK",k:"Cross-border",diff:2,
+ angle:"US delivery platform takes out a London-listed one that never really recovered from its IPO price.",
+ curve:"Deliveroo IPO'd at £3.90 and sold below it. What went wrong?"},
+{a:"Prosus",t:"Just Eat Takeaway",v:"€4.1bn",d:"2025",s:"Consumer tech",r:"Europe",k:"Take-private",diff:3,
+ angle:"Delivery consolidation on the continent. Prosus deploying capital it struggles to spend elsewhere.",
+ curve:"Why do food delivery businesses so rarely earn their cost of capital?"},
+{a:"Qualcomm",t:"Alphawave",v:"$2.4bn",d:"2025",s:"Semis",r:"UK",k:"Cross-border",diff:3,
+ angle:"Another UK-listed semiconductor business sold to a US buyer. Data centre connectivity IP is the asset.",
+ curve:"Why can't London hold on to its semiconductor companies?"},
+{a:"KKR",t:"Spectris",v:"£4.7bn",d:"2025",s:"Industrials",r:"UK",k:"Contested",diff:3,
+ angle:"KKR outbid Advent for precision instruments. Two sponsors fighting over the same undervalued UK mid-cap.",
+ curve:"Two sponsors, same asset, different price. What justifies the difference?"},
+{a:"Aviva",t:"Direct Line",v:"£3.7bn",d:"Closed Jul 2025",s:"Insurance",r:"UK",k:"Strategic",diff:2,
+ angle:"UK motor and home insurance consolidation after an initial approach was publicly rejected as too low.",
+ curve:"How do you model synergies in personal lines insurance without wrecking the combined ratio?"},
+{a:"Sunoco",t:"Parkland",v:"~$9.1bn",d:"2025",s:"Energy",r:"Cross-border",k:"Strategic",diff:3,
+ angle:"Fuel distribution consolidation into North America's largest independent. Structured partly through a new listed vehicle.",
+ curve:"Why use a partnership structure? What's the tax logic?"},
+{a:"Bill Chisholm-led group",t:"Boston Celtics",v:"$6.1bn",d:"2025",s:"Sport",r:"US",k:"Sports",diff:2,
+ angle:"Record NBA franchise price at the time, paid for a team with no owned arena. Media rights are the underlying asset.",
+ curve:"You can't run a DCF on a trophy asset. So what are you actually paying for?"},
+{a:"Mark Walter-led group",t:"Los Angeles Lakers",v:"~$10bn",d:"Jun 2025",s:"Sport",r:"US",k:"Sports",diff:2,
+ angle:"Beat the Celtics record within months. The Buss family sells majority control after decades.",
+ curve:"Franchise values compound faster than the S&amp;P. Is that sustainable or a bubble?"},
+{a:"Woody Johnson",t:"43% of Crystal Palace",v:"~£190m",d:"2025",s:"Sport",r:"UK",k:"Sports",diff:3,
+ angle:"Textor's stake sold after multi-club ownership rules put Palace's European place at risk. Governance forced the trade.",
+ curve:"What is multi-club ownership and why is UEFA hostile to it?"},
+{a:"Liberty Media",t:"Dorna (MotoGP)",v:"~€4.2bn",d:"Closed 2025",s:"Sport",r:"Europe",k:"Sports",diff:3,
+ angle:"The Formula One owner buys motorcycle racing, cleared only after commitments to the European Commission.",
+ curve:"What's the playbook Liberty ran on F1, and does it transfer?"},
+{a:"DAZN",t:"Foxtel",v:"A$3.4bn",d:"2025",s:"Media",r:"Cross-border",k:"Strategic",diff:3,
+ angle:"Sports streamer buys a traditional pay-TV operator to get subscribers and rights in a new market.",
+ curve:"Is buying legacy pay-TV a smart entry or an anchor?"},
+
+/* ---------- 2024 and still asked ---------- */
+{a:"Skydance Media",t:"Paramount Global",v:"~$8bn",d:"Closed Aug 2025",s:"Media",r:"US",k:"Control deal",diff:2,
+ angle:"Ellison family buys National Amusements to control Paramount. A controlled-company sale, so minorities had little say.",
+ curve:"Dual-class shares. Who got paid what, and was it fair?"},
+{a:"Cisco",t:"Splunk",v:"$28bn",d:"Closed Mar 2024",s:"Software",r:"US",k:"Strategic",diff:2,
+ angle:"Networking buys observability and security data. Cisco's largest deal ever, funded largely with offshore cash and debt.",
+ curve:"How does a cash-rich acquirer decide between buybacks and a $28bn acquisition?"},
+{a:"Diamondback Energy",t:"Endeavor Energy",v:"~$26bn",d:"2024",s:"Energy",r:"US",k:"Strategic",diff:3,
+ angle:"The last big private Permian operator sells. Shale consolidation from a fragmented industry to a handful of names.",
+ curve:"Value a shale producer. Why does PV-10 matter more than EBITDA?"},
+{a:"ConocoPhillips",t:"Marathon Oil",v:"$22.5bn",d:"2024",s:"Energy",r:"US",k:"All-stock",diff:3,
+ angle:"All-stock, no premium panic, sold as cost synergies and inventory depth rather than a bet on the oil price.",
+ curve:"All-stock in a cyclical. What does the exchange ratio protect against?"},
+{a:"Home Depot",t:"SRS Distribution",v:"$18.25bn",d:"2024",s:"Distribution",r:"US",k:"Strategic",diff:3,
+ angle:"Retailer buys its way into the professional contractor channel rather than trying to win it store by store.",
+ curve:"Retail versus distribution economics. Which has better returns on capital and why?"},
+{a:"Silver Lake",t:"Endeavor Group",v:"~$13bn",d:"2024",s:"Sport &amp; media",r:"US",k:"Take-private",diff:2,
+ angle:"Sponsor takes private the owner of WME, IMG and a controlling stake in TKO. The sum of the parts was never credited.",
+ curve:"Conglomerate discount. How would you break this one up?"},
+{a:"International Paper",t:"DS Smith",v:"£5.8bn",d:"2024",s:"Packaging",r:"UK",k:"Contested",diff:3,
+ angle:"US buyer beat Mondi for a FTSE 100 packaging business. Sustainable packaging demand plus transatlantic scale.",
+ curve:"Paper versus plastic packaging. Where is the structural growth?"},
+{a:"Vodafone",t:"Three UK",v:"£15bn merger",d:"Completed 2025",s:"Telecom",r:"UK",k:"Merger",diff:2,
+ angle:"Four UK mobile networks become three, cleared with binding commitments on pricing and network investment.",
+ curve:"Regulators blocked four-to-three for years. What argument finally worked?"},
+{a:"Barratt Developments",t:"Redrow",v:"£2.5bn",d:"2024",s:"Housebuilding",r:"UK",k:"All-share",diff:3,
+ angle:"All-share merger of UK housebuilders in a weak market, cleared after a CMA review nobody expected to be difficult.",
+ curve:"How do you value a housebuilder? Why is the land bank the whole model?"},
+{a:"Saks Global",t:"Neiman Marcus",v:"$2.65bn",d:"2024",s:"Retail",r:"US",k:"Strategic",diff:3,
+ angle:"Luxury department stores combine, with Amazon and Salesforce taking minority stakes in the buyer.",
+ curve:"Why would Amazon want equity in a struggling department store?"},
+
+/* ---------- deals that died: interviewers love these ---------- */
+{a:"BBVA",t:"Banco Sabadell",v:"~€13bn (lapsed)",d:"Lapsed Oct 2025",s:"FIG",r:"Spain",k:"Failed hostile",diff:2,
+ angle:"Europe's highest-profile hostile bank bid in years, taken straight to shareholders and rejected on acceptances.",
+ curve:"Why did a hostile go to shareholders and still fail? What would you have changed?"},
+{a:"BHP",t:"Anglo American",v:"£39bn (withdrawn)",d:"2024",s:"Mining",r:"UK",k:"Failed",diff:2,
+ angle:"Three rejected proposals, all conditional on Anglo unbundling its South African units first. Structure killed it, not price.",
+ curve:"Why was the demerger condition unacceptable to the Anglo board?"},
+{a:"UniCredit",t:"Commerzbank",v:"Stake building",d:"Ongoing",s:"FIG",r:"Europe",k:"Creeping bid",diff:3,
+ angle:"A stake accumulated partly through derivatives while Berlin objects. A takeover conducted at arm's length, slowly.",
+ curve:"How do you build a stake with derivatives, and when must you disclose?"},
+{a:"Elliott Management",t:"various UK plc",v:"Activist",d:"Ongoing",s:"Activism",r:"UK",k:"Activist",diff:3,
+ angle:"Not an acquisition. Activists forcing breakups and sales, which is where a lot of UK M&amp;A now originates.",
+ curve:"How does an activist actually force a board to sell?"},
+{a:"Novo Nordisk",t:"Metsera (outbid)",v:"Outbid",d:"Nov 2025",s:"Pharma",r:"Cross-border",k:"Failed",diff:3,
+ angle:"The losing side of a public bidding war, including a restructured offer that drew antitrust objections.",
+ curve:"You lose an auction. What do you tell your board the next morning?"}
+];
+
+/* ---------- state ---------- */
+const F = {region:"all", type:"all", diff:"all"};
+let pool = [], used = new Set(), current = null, spinning = false;
+
+const $ = id => document.getElementById(id);
+
+/* ---------- filters ---------- */
+const FILTERS = [
+  {label:"Region", key:"region", opts:[["all","Everything"],["UK","UK"],["Europe","Europe"],["US","US"],["Cross-border","Cross-border"]]},
+  {label:"Flavour", key:"type", opts:[["all","Any"],["sponsor","Sponsor / take-private"],["failed","Deals that died"],["sport","Sport &amp; media"],["mega","Above $20bn"]]},
+  {label:"Heat", key:"diff", opts:[["all","Any"],["1","Warm-up"],["2","Standard"],["3","Deep cut"]]}
+];
+
+function buildFilters(){
+  const box = $("filters");
+  FILTERS.forEach(f=>{
+    const lab = document.createElement("span");
+    lab.className="fgroup"; lab.textContent=f.label;
+    box.appendChild(lab);
+    f.opts.forEach(([val,txt])=>{
+      const b=document.createElement("button");
+      b.className="chip"; b.innerHTML=txt;
+      b.setAttribute("aria-pressed", F[f.key]===val);
+      b.onclick=()=>{
+        F[f.key]=val;
+        [...box.querySelectorAll(".chip")].forEach(c=>{});
+        buildPool(); refreshChips();
+      };
+      b.dataset.key=f.key; b.dataset.val=val;
+      box.appendChild(b);
+    });
+  });
+}
+function refreshChips(){
+  [...document.querySelectorAll(".chip")].forEach(c=>{
+    c.setAttribute("aria-pressed", F[c.dataset.key]===c.dataset.val);
+  });
+}
+
+function num(v){
+  const m = String(v).replace(/,/g,"").match(/([\d.]+)\s*(bn|m)/i);
+  if(!m) return 0;
+  return parseFloat(m[1]) * (m[2].toLowerCase()==="bn" ? 1000 : 1);
+}
+function matches(d){
+  if(F.region!=="all" && d.r!==F.region) return false;
+  if(F.diff!=="all" && String(d.diff)!==F.diff) return false;
+  if(F.type==="sponsor" && !/Sponsor|Take-private|Consortium/i.test(d.k)) return false;
+  if(F.type==="failed" && !/Fail|Contested|Creeping|Activist/i.test(d.k)) return false;
+  if(F.type==="sport" && !/Sport|Media|ent\./i.test(d.s)) return false;
+  if(F.type==="mega" && num(d.v) < 20000) return false;
+  return true;
+}
+function buildPool(){
+  pool = DEALS.filter(matches);
+  $("poolCount").textContent = pool.length;
+  if(pool.length===0) $("phasehint").textContent = "no deals match those filters — loosen one";
+  else if(!spinning) $("phasehint").textContent = "pull the lever to start";
+}
+
+/* ---------- the pull ---------- */
+function pick(){
+  let avail = pool.filter(d=>!used.has(d.a+d.t));
+  if(avail.length===0){ used.clear(); avail = pool; }
+  if(avail.length===0) return null;
+  const d = avail[Math.floor(Math.random()*avail.length)];
+  used.add(d.a+d.t);
+  return d;
+}
+
+function pull(){
+  if(spinning) return;
+  const deal = pick();
+  if(!deal){ $("phasehint").textContent = "nothing in the pool — change the filters"; return; }
+  current = deal;
+  spinning = true;
+  $("lever").classList.add("pulled");
+  setTimeout(()=>$("lever").classList.remove("pulled"), 220);
+  $("slip").classList.remove("on");
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const cols = [
+    {r:$("r1"), v:$("v1"), field:"a", stop: reduce?120:620},
+    {r:$("r2"), v:$("v2"), field:"t", stop: reduce?160:980},
+    {r:$("r3"), v:$("v3"), field:"v", stop: reduce?200:1340}
+  ];
+  cols.forEach(c=>{
+    c.r.classList.add("spin");
+    const iv = setInterval(()=>{
+      const rnd = DEALS[Math.floor(Math.random()*DEALS.length)];
+      c.v.innerHTML = rnd[c.field];
+    }, 55);
+    setTimeout(()=>{
+      clearInterval(iv);
+      c.r.classList.remove("spin");
+      c.v.innerHTML = deal[c.field];
+      if(c.field==="v"){ land(deal); }
+    }, c.stop);
+  });
+}
+
+function land(deal){
+  spinning = false;
+  $("pulled").textContent = used.size;
+  const tags = [deal.d, deal.s, deal.r, deal.k];
+  $("tags").innerHTML = tags.map((t,i)=>
+    `<span class="tag${i===3?' hot':''}">${t}</span>`).join("");
+  $("angle").innerHTML = deal.angle;
+  const cv = $("curve");
+  cv.innerHTML = deal.curve;
+  cv.classList.add("hidden-until");
+  $("slip").classList.add("on");
+  resetClock();
+  startClock();
+}
+
+$("curve").addEventListener("click", e=> e.currentTarget.classList.toggle("hidden-until"));
+
+/* ---------- clock ---------- */
+const RESEARCH = 10*60, PITCH = 60;
+let phase="idle", left=RESEARCH, tick=null;
+
+function fmt(s){ const m=Math.floor(s/60); const r=s%60; return m+":"+String(r).padStart(2,"0"); }
+function paint(){
+  $("clock").textContent = fmt(left);
+  $("clock").className = "clock" + (phase==="pitch"?" pitch":"") + (phase==="done"?" done":"");
+  $("phase").textContent = phase==="research" ? "researching" : phase==="pitch" ? "pitch — out loud" : phase;
+}
+function startClock(){
+  if(tick) return;
+  if(phase==="idle"||phase==="done"){ phase="research"; left=RESEARCH; }
+  $("startBtn").textContent="Pause";
+  $("phasehint").textContent = "build a view, don't read a summary";
+  tick = setInterval(()=>{
+    left--;
+    if(left<=0){
+      if(phase==="research"){ phase="pitch"; left=PITCH; $("phasehint").textContent="stand up. 60 seconds. no notes."; }
+      else { phase="done"; left=0; clearInterval(tick); tick=null; $("startBtn").textContent="Start"; $("phasehint").textContent="time. pull again."; }
+    }
+    paint();
+  },1000);
+  paint();
+}
+function pauseClock(){
+  clearInterval(tick); tick=null; $("startBtn").textContent="Start";
+  $("phasehint").textContent="paused";
+}
+function resetClock(){
+  clearInterval(tick); tick=null; phase="research"; left=RESEARCH;
+  $("startBtn").textContent="Start"; paint();
+}
+$("startBtn").onclick = ()=> tick ? pauseClock() : startClock();
+$("resetBtn").onclick = ()=>{ resetClock(); $("phasehint").textContent="clock reset"; };
+$("skipBtn").onclick = ()=>{
+  clearInterval(tick); tick=null; phase="pitch"; left=PITCH; paint(); startClock();
+};
+$("lever").onclick = pull;
+
+document.addEventListener("keydown", e=>{
+  if(e.target.tagName==="INPUT") return;
+  if(e.code==="Space"){ e.preventDefault(); pull(); }
+  if(e.key==="s"){ tick ? pauseClock() : startClock(); }
+  if(e.key==="r"){ resetClock(); }
+});
+
+/* ---------- the book ---------- */
+function renderTable(q=""){
+  const s = q.toLowerCase();
+  const rows = DEALS
+    .filter(d => !s || (d.a+d.t+d.s+d.d+d.k+d.r).toLowerCase().includes(s))
+    .map(d=>`<tr><td class="n">${d.d}</td><td>${d.a}</td><td>${d.t}</td><td class="n">${d.v}</td><td>${d.s}</td><td>${d.k}</td></tr>`)
+    .join("");
+  $("tbody").innerHTML = rows || `<tr><td colspan="6" style="color:#7FA394">nothing matches that</td></tr>`;
+}
+$("search").addEventListener("input", e=>renderTable(e.target.value));
+
+/* ---------- boot ---------- */
+$("deckCount").textContent = DEALS.length;
+buildFilters();
+refreshChips();
+buildPool();
+renderTable();
+paint();
+</script>
+</body>
+</html>
