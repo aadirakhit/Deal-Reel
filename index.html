@@ -9,187 +9,101 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --felt:#0C3A2D;
-    --felt-dk:#06231C;
-    --felt-lt:#12503E;
-    --brass:#C79A3F;
-    --brass-lt:#E8CE8A;
-    --bone:#F3EDE0;
-    --bone-dim:#DCD3C0;
-    --oxblood:#8C2B22;
-    --ink:#14100C;
-    --display:'Archivo Black', 'Arial Black', sans-serif;
-    --body:'Inter', system-ui, sans-serif;
-    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    --felt:#0C3A2D; --felt-dk:#06231C; --brass:#C79A3F; --brass-lt:#E8CE8A;
+    --bone:#F3EDE0; --bone-dim:#DCD3C0; --oxblood:#8C2B22; --ink:#14100C;
+    --display:'Archivo Black','Arial Black',sans-serif;
+    --body:'Inter',system-ui,sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
   body{
-    background:
-      radial-gradient(120% 80% at 50% -10%, #14563F 0%, var(--felt) 40%, var(--felt-dk) 100%);
-    color:var(--bone);
-    font-family:var(--body);
-    min-height:100vh;
-    padding:28px 16px 64px;
-    -webkit-font-smoothing:antialiased;
+    background:radial-gradient(120% 80% at 50% -10%, #14563F 0%, var(--felt) 40%, var(--felt-dk) 100%);
+    color:var(--bone);font-family:var(--body);min-height:100vh;padding:28px 16px 64px;-webkit-font-smoothing:antialiased;
   }
   .wrap{max-width:1020px;margin:0 auto}
-
-  /* header */
   header{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
-  h1{
-    font-family:var(--display);
-    font-size:clamp(30px,6vw,52px);
-    line-height:.92;
-    letter-spacing:-.02em;
-    margin:0;
-    color:var(--bone);
-    text-transform:uppercase;
-  }
+  h1{font-family:var(--display);font-size:clamp(30px,6vw,52px);line-height:.92;letter-spacing:-.02em;margin:0;text-transform:uppercase}
   h1 em{font-style:normal;color:var(--brass-lt);display:block;font-size:.42em;letter-spacing:.22em;margin-top:10px}
   .meta{font-family:var(--mono);font-size:12px;color:var(--bone-dim);text-align:right;line-height:1.7}
   .meta b{color:var(--brass-lt);font-weight:600}
 
-  /* cabinet */
-  .cabinet{
-    background:linear-gradient(180deg,#0F4636 0%, #0A3128 100%);
-    border:2px solid var(--brass);
-    border-radius:14px;
-    box-shadow:0 0 0 6px rgba(199,154,63,.12), 0 26px 60px rgba(0,0,0,.45);
-    padding:22px;
-    position:relative;
-  }
-  .cabinet::before{
-    content:"";position:absolute;inset:8px;border:1px solid rgba(232,206,138,.22);border-radius:8px;pointer-events:none
-  }
-
+  .cabinet{background:linear-gradient(180deg,#0F4636,#0A3128);border:2px solid var(--brass);border-radius:14px;
+    box-shadow:0 0 0 6px rgba(199,154,63,.12),0 26px 60px rgba(0,0,0,.45);padding:22px;position:relative}
+  .cabinet::before{content:"";position:absolute;inset:8px;border:1px solid rgba(232,206,138,.22);border-radius:8px;pointer-events:none}
   .machine{display:flex;gap:20px;align-items:stretch}
   .reels{flex:1;min-width:0}
   .reelrow{display:grid;grid-template-columns:1fr 1fr .8fr;gap:10px}
-  @media(max-width:660px){.reelrow{grid-template-columns:1fr}}
-  .reel{
-    background:var(--bone);
-    color:var(--ink);
-    border-radius:6px;
-    padding:14px 14px 12px;
-    min-height:104px;
-    display:flex;flex-direction:column;justify-content:center;
-    position:relative;overflow:hidden;
-    box-shadow:inset 0 10px 18px -12px rgba(0,0,0,.55), inset 0 -10px 18px -12px rgba(0,0,0,.55);
-  }
-  .reel .lab{
-    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-    color:#8A8272;margin-bottom:7px
-  }
-  .reel .val{
-    font-family:var(--display);font-size:20px;line-height:1.08;text-transform:uppercase;letter-spacing:-.01em;
-    word-break:break-word;
-  }
-  .reel.money .val{font-family:var(--mono);font-weight:600;font-size:24px;letter-spacing:-.02em}
+  @media(max-width:660px){.reelrow{grid-template-columns:1fr}.machine{flex-direction:column-reverse}.leverbay{width:100%!important;flex-direction:row}}
+  .reel{background:var(--bone);color:var(--ink);border-radius:6px;padding:14px;min-height:104px;display:flex;flex-direction:column;
+    justify-content:center;overflow:hidden;box-shadow:inset 0 10px 18px -12px rgba(0,0,0,.55),inset 0 -10px 18px -12px rgba(0,0,0,.55)}
+  .reel .lab{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8A8272;margin-bottom:7px}
+  .reel .val{font-family:var(--display);font-size:20px;line-height:1.08;text-transform:uppercase;word-break:break-word}
+  .reel.money .val{font-family:var(--mono);font-weight:600;font-size:24px}
   .reel.spin .val{opacity:.55;filter:blur(.4px)}
   .payline{height:2px;background:var(--oxblood);margin:12px 0;opacity:.75;border-radius:2px}
-
-  /* lever */
   .leverbay{width:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
-  @media(max-width:660px){.machine{flex-direction:column-reverse}.leverbay{width:100%;flex-direction:row}}
-  .lever{
-    background:none;border:0;cursor:pointer;padding:0;
-    display:flex;flex-direction:column;align-items:center;
-  }
+  .lever{background:none;border:0;cursor:pointer;padding:0;display:flex;flex-direction:column;align-items:center}
   .lever svg{display:block;transition:transform .18s cubic-bezier(.2,.8,.3,1);transform-origin:50% 100%}
   .lever:active svg,.lever.pulled svg{transform:rotate(26deg)}
   .lever:focus-visible{outline:2px solid var(--brass-lt);outline-offset:6px;border-radius:8px}
   .leverlab{font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--brass-lt);margin-top:8px;text-transform:uppercase}
 
-  /* deal detail */
-  .slip{
-    margin-top:18px;background:var(--bone);color:var(--ink);border-radius:8px;padding:18px 18px 16px;
-    display:none;
-  }
+  .slip{margin-top:18px;background:var(--bone);color:var(--ink);border-radius:8px;padding:18px;display:none}
   .slip.on{display:block}
   .tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
-  .tag{
-    font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-    border:1px solid rgba(20,16,12,.28);border-radius:99px;padding:4px 9px;color:#3A3428
-  }
+  .tag{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(20,16,12,.28);
+    border-radius:99px;padding:4px 9px;color:#3A3428}
   .tag.hot{background:var(--oxblood);border-color:var(--oxblood);color:#fff}
   .slipgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
   @media(max-width:660px){.slipgrid{grid-template-columns:1fr}}
-  .slipgrid h3{
-    font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8A8272;
-    margin:0 0 6px
-  }
+  .slipgrid h3{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8A8272;margin:0 0 6px}
   .slipgrid p{margin:0;font-size:14.5px;line-height:1.55}
   .curve{border-left:3px solid var(--oxblood);padding-left:12px}
-  .hidden-until{filter:blur(5px);user-select:none;cursor:pointer}
-  .hidden-until::after{content:""}
+  .veil{filter:blur(5px);user-select:none;cursor:pointer}
+  .modelbtn{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;background:transparent;
+    color:var(--oxblood);border:1px solid rgba(140,43,34,.5);padding:6px 10px;border-radius:4px;cursor:pointer;margin-top:10px}
+  .modelbtn:hover{background:var(--oxblood);color:#fff}
+  .modelbtn:focus-visible{outline:2px solid var(--oxblood);outline-offset:3px}
+  ul.model{display:none;margin:10px 0 0;padding-left:18px;font-size:13.5px;line-height:1.6}
+  ul.model.on{display:block}
+  ul.model li{margin-bottom:5px}
 
-  /* timer */
-  .clockbar{
-    margin-top:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;
-    border-top:1px solid rgba(232,206,138,.22);padding-top:16px
-  }
-  .clock{font-family:var(--mono);font-size:40px;font-weight:600;letter-spacing:-.02em;color:var(--bone);min-width:132px}
-  .clock.pitch{color:var(--brass-lt)}
-  .clock.done{color:var(--oxblood)}
+  .clockbar{margin-top:18px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid rgba(232,206,138,.22);padding-top:16px}
+  .clock{font-family:var(--mono);font-size:40px;font-weight:600;min-width:132px}
+  .clock.pitch{color:var(--brass-lt)} .clock.done{color:var(--oxblood)}
   .phase{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--bone-dim)}
-  .btn{
-    font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
-    background:transparent;color:var(--brass-lt);border:1px solid var(--brass);
-    padding:9px 14px;border-radius:4px;cursor:pointer;transition:background .15s,color .15s
-  }
+  .btn{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;background:transparent;color:var(--brass-lt);
+    border:1px solid var(--brass);padding:9px 14px;border-radius:4px;cursor:pointer;transition:background .15s,color .15s}
   .btn:hover{background:var(--brass);color:var(--ink)}
   .btn:focus-visible{outline:2px solid var(--brass-lt);outline-offset:3px}
   .btn.solid{background:var(--brass);color:var(--ink);font-weight:600}
-  .btn.solid:hover{background:var(--brass-lt)}
   .spacer{flex:1}
-
-  /* filters */
   .filters{margin:24px 0 0;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-  .chip{
-    font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
-    border:1px solid rgba(232,206,138,.35);color:var(--bone-dim);background:transparent;
-    padding:7px 12px;border-radius:99px;cursor:pointer
-  }
+  .chip{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(232,206,138,.35);
+    color:var(--bone-dim);background:transparent;padding:7px 12px;border-radius:99px;cursor:pointer}
   .chip[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:var(--ink);font-weight:600}
   .chip:focus-visible{outline:2px solid var(--brass-lt);outline-offset:3px}
   .fgroup{font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#7FA394;margin-right:2px}
-
-  /* list */
   details.book{margin-top:26px;border-top:1px solid rgba(232,206,138,.22);padding-top:16px}
-  details.book summary{
-    font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-lt);
-    cursor:pointer;list-style:none
-  }
+  details.book summary{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-lt);cursor:pointer;list-style:none}
   details.book summary::-webkit-details-marker{display:none}
-  details.book summary::before{content:"▸ ";}
-  details.book[open] summary::before{content:"▾ ";}
+  details.book summary::before{content:"▸ "} details.book[open] summary::before{content:"▾ "}
   table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px}
   th,td{text-align:left;padding:8px 10px;border-bottom:1px solid rgba(232,206,138,.14);vertical-align:top}
   th{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#7FA394;font-weight:400}
   td.n{font-family:var(--mono);white-space:nowrap;color:var(--brass-lt)}
   tr:hover td{background:rgba(232,206,138,.06)}
-  .search{
-    font-family:var(--mono);font-size:12px;background:rgba(0,0,0,.25);border:1px solid rgba(232,206,138,.3);
-    color:var(--bone);padding:8px 12px;border-radius:4px;margin-top:12px;width:240px;max-width:100%
-  }
-  .search:focus-visible{outline:2px solid var(--brass-lt);outline-offset:2px}
-
+  .search{font-family:var(--mono);font-size:12px;background:rgba(0,0,0,.25);border:1px solid rgba(232,206,138,.3);color:var(--bone);
+    padding:8px 12px;border-radius:4px;margin-top:12px;width:240px;max-width:100%}
   footer{margin-top:30px;font-family:var(--mono);font-size:11px;line-height:1.8;color:#7FA394}
   footer b{color:var(--bone-dim);font-weight:400}
-  kbd{
-    font-family:var(--mono);font-size:10px;border:1px solid rgba(232,206,138,.4);border-radius:3px;
-    padding:1px 5px;color:var(--brass-lt)
-  }
-  @media (prefers-reduced-motion: reduce){
-    .lever svg{transition:none}
-    .reel.spin .val{filter:none}
-  }
+  kbd{font-family:var(--mono);font-size:10px;border:1px solid rgba(232,206,138,.4);border-radius:3px;padding:1px 5px;color:var(--brass-lt)}
+  @media (prefers-reduced-motion:reduce){.lever svg{transition:none}.reel.spin .val{filter:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
-
   <header>
     <h1>Deal Reel<em>pull &middot; research &middot; pitch</em></h1>
     <div class="meta">
@@ -220,7 +134,6 @@
           <button class="btn" id="resetBtn">Reset clock</button>
         </div>
       </div>
-
       <div class="leverbay">
         <button class="lever" id="lever" aria-label="Pull the lever for a new deal">
           <svg width="46" height="120" viewBox="0 0 46 120" aria-hidden="true">
@@ -244,7 +157,9 @@
         </div>
         <div class="curve">
           <h3>Curveball they'll throw</h3>
-          <p id="curve" class="hidden-until" title="Click to reveal"></p>
+          <p id="curve" class="veil" title="Click to reveal"></p>
+          <button class="modelbtn" id="modelbtn">What good sounds like</button>
+          <ul class="model" id="model"></ul>
         </div>
       </div>
     </div>
@@ -262,234 +177,686 @@
   </details>
 
   <footer>
-    <b>How to run it:</b> pull → 10 minutes to build a view → 60 seconds to deliver it out loud, standing up.<br>
+    <b>How to run it:</b> pull → 10 minutes to build a view → 60 seconds delivered out loud, standing up.<br>
     <b>The 60 seconds:</b> what happened (10s) · why they did it (15s) · how it was paid for (10s) · your view (15s) · the main risk (10s).<br>
+    <b>The model answers are scaffolding, not scripts.</b> They're the shape of a good answer. Say it in your own words or it'll sound rehearsed.<br>
     <b>Keys:</b> <kbd>space</kbd> pull · <kbd>s</kbd> start/pause · <kbd>r</kbd> reset<br>
-    <b>Health warning:</b> values are headline / enterprise value around announcement and some deals moved after. Check the FT before you quote a number in a room.
+    <b>Health warning:</b> values are headline or enterprise value around announcement and some deals moved after. Check the FT before you quote a number in a room.
   </footer>
 </div>
 
 <script>
 const DEALS = [
-/* ---------- 2026 ---------- */
+/* ================= 2026 ================= */
 {a:"Paramount Skydance",t:"Warner Bros. Discovery",v:"~$110bn",d:"2026",s:"Media",r:"US",k:"Strategic",diff:1,
  angle:"Two of the largest studio and streaming libraries under one roof after a long contested process. Scale as the answer to Netflix.",
- curve:"Where do the synergies actually come from, and what does the regulator make of CNN?"},
+ curve:"Where do the synergies actually come from, and what does the regulator make of CNN?",
+ ans:["Cost synergies are real and near-term: overlapping streaming tech, marketing, corporate, distribution deals renegotiated once instead of twice.",
+      "Revenue synergies are the weak claim. Two libraries in one app raises pricing power a bit, it doesn't double subscribers.",
+      "The regulatory risk is political rather than economic. Owning a news network makes approval a question of who is in office, not market share."]},
 {a:"McCormick",t:"Unilever foods business",v:"$44.8bn EV",d:"Mar 2026",s:"Consumer",r:"Cross-border",k:"Carve-out",diff:1,
  angle:"Knorr and Hellmann's leave Unilever so it can be a beauty and personal care company. McCormick roughly doubles in size.",
- curve:"Why does a 22%-margin business get sold? Talk me through growth versus margin."},
+ curve:"Why does a 22%-margin business get sold? Talk me through growth versus margin.",
+ ans:["Margin is a level, growth is a rate. Equity markets pay a multiple on the growth rate, so a high-margin low-growth asset drags the group multiple down.",
+      "Developed-market packaged food faces private label, GLP-1 effects on volumes and sceptical consumers. Structural, not cyclical.",
+      "For Unilever this is a re-rating trade: fewer, faster-growing divisions in beauty and personal care should lift the whole group's multiple."]},
 {a:"BlackRock (GIP) &amp; EQT",t:"AES Corporation",v:"$33.4bn",d:"Mar 2026",s:"Power",r:"US",k:"Sponsor",diff:2,
  angle:"Take-private of a utility and renewables platform. The real asset being bought is grid access for data centre demand.",
- curve:"How do you underwrite a regulated utility LBO when rates aren't near zero?"},
+ curve:"How do you underwrite a regulated utility LBO when rates aren't near zero?",
+ ans:["Regulated returns are set by the regulator and reset periodically, so revenue is contracted-like and supports more leverage than a cyclical.",
+      "You underwrite to cash yield plus rate base growth, not multiple expansion. The exit assumption has to be conservative.",
+      "The upside case is contracted power to hyperscalers at prices well above historic tariffs. That is the bit that isn't in the base case."]},
 {a:"Kone",t:"TK Elevator",v:"€29.4bn",d:"2026",s:"Industrials",r:"Europe",k:"Sponsor exit",diff:2,
  angle:"Advent and Cinven exit the business they bought from Thyssenkrupp in 2020. Would create the world's largest lift maker.",
- curve:"Antitrust in a market with four players. What do they have to divest?"},
+ curve:"Antitrust in a market with four players. What do they have to divest?",
+ ans:["Four-to-three in an oligopoly with a prior cartel history in European lifts. Brussels will start from a hostile position.",
+      "Expect structural remedies in overlapping national markets, most likely new-installation businesses in specific countries.",
+      "Argue the market is really the maintenance base, which is stickier and locally fragmented, so shares are lower than they look."]},
 {a:"Intesa Sanpaolo",t:"Monte dei Paschi di Siena",v:"€34.5bn",d:"2026",s:"FIG",r:"Italy",k:"Contested",diff:3,
  angle:"Cash and shares offer for the bank that needed a state bailout a decade ago. MPS is fighting rather than folding.",
- curve:"Why do European bank mergers keep stalling? Name the political blockers."},
+ curve:"Why do European bank mergers keep stalling? Name the political blockers.",
+ ans:["Governments treat banks as strategic: jobs, branch networks in small towns, and lending to national champions.",
+      "The banking union is incomplete. No single deposit insurance, and capital is ring-fenced nationally, so cross-border synergies don't materialise.",
+      "Domestic deals work better than cross-border for exactly that reason, which is why Italy consolidates internally rather than merging with Spain or Germany."]},
 {a:"Monte dei Paschi",t:"Banco BPM",v:"€25.3bn",d:"Aug 2026",s:"FIG",r:"Italy",k:"Defensive",diff:3,
  angle:"The defence: MPS bids for Banco BPM and Banca Generali to become Italy's third force rather than be absorbed.",
- curve:"Is an all-share defensive acquisition ever in shareholders' interest?"},
+ curve:"Is an all-share defensive acquisition ever in shareholders' interest?",
+ ans:["Sometimes. If your shares are the currency and they're fully valued, buying with paper transfers risk to the seller.",
+      "But defensive deals are contaminated by management self-interest. The board avoids being bought, shareholders lose a control premium.",
+      "The test: would you do this deal if no one was bidding for you? If not, it's entrenchment dressed as strategy."]},
 {a:"Prologis",t:"Segro",v:"£14.3bn",d:"Aug 2026",s:"Real estate",r:"UK",k:"Cross-border",diff:2,
  angle:"US logistics giant lands a European warehouse platform after repeated rejections. The data centre pipeline is half the story.",
- curve:"How do you value a REIT? Why is NAV not the whole answer here?"},
+ curve:"How do you value a REIT? Why is NAV not the whole answer here?",
+ ans:["Standard toolkit is NAV, plus a cap rate on stabilised net operating income, plus FFO or AFFO multiples for the earnings view.",
+      "NAV values today's buildings at today's yields. It undervalues a development pipeline and a land bank with grid connections.",
+      "Here the buyer is paying for optionality: land near power and demand, which the appraisal-based NAV never captured."]},
 {a:"Nuveen",t:"Schroders",v:"£9.9bn",d:"2026",s:"Asset mgmt",r:"UK",k:"Cross-border",diff:2,
  angle:"222 years of independence ends. Creates roughly $2.5tn AUM. The founding family with ~41% agreed to sell.",
- curve:"Why is mid-sized active management structurally dying?"},
+ curve:"Why is mid-sized active management structurally dying?",
+ ans:["Fees compress toward passive while costs for tech, distribution and compliance are fixed and rising. Operating leverage works against you.",
+      "Scale players amortise those costs over trillions. Boutiques justify fees on a genuine niche. The middle has neither.",
+      "The escape route is alternatives and private markets, where fees hold up, which is why everyone is buying private credit."]},
 {a:"EQT",t:"Intertek",v:"£9.4bn",d:"2026",s:"Business svcs",r:"UK",k:"Take-private",diff:2,
  angle:"Testing and certification taken private after shareholders decided the public market was never going to pay up.",
- curve:"Why are sponsors able to pay more than the market for TIC assets?"},
+ curve:"Why are sponsors able to pay more than the market for TIC assets?",
+ ans:["Recurring, regulation-driven revenue with high retention supports leverage a public shareholder base won't tolerate.",
+      "Sponsors underwrite a five-year buy-and-build, public markets price the next two quarters. Different holding periods, different values.",
+      "Add the UK discount: London has been de-rating quality mid-caps, so the entry multiple is simply cheaper than the US equivalent."]},
 {a:"Apollo",t:"easyJet",v:"£5.7bn",d:"2026",s:"Airlines",r:"UK",k:"Contested",diff:2,
  angle:"Apollo outbids Castlelake for an airline that had called earlier approaches opportunistic. Classic cheap-London situation.",
- curve:"How do you LBO an airline? What does the aircraft fleet do to the debt capacity?"},
+ curve:"How do you LBO an airline? What does the aircraft fleet do to the debt capacity?",
+ ans:["Airlines are cyclical with high operating leverage, which is normally the opposite of an LBO candidate.",
+      "Owned aircraft are hard collateral you can sale-and-leaseback, so the real deal is asset-backed financing plus a slot portfolio.",
+      "The risk is you strip the balance sheet, then a downturn arrives and there's no cushion left. That's the Thomas Cook lesson."]},
 {a:"Engie",t:"UK Power Networks",v:"$14.2bn",d:"Feb 2026",s:"Utilities",r:"UK",k:"Infrastructure",diff:2,
  angle:"CK Group sells the distribution network serving London and the southeast. Regulated cash flows at scale.",
- curve:"How does Ofgem's RIIO price control affect what a buyer will pay?"},
+ curve:"How does Ofgem's RIIO price control affect what a buyer will pay?",
+ ans:["Ofgem sets allowed revenue over a multi-year period based on a regulated asset value and an allowed return on capital.",
+      "So value is largely a function of RAV growth plus the allowed return, and you typically transact at a premium to RAV.",
+      "Regulatory risk is the whole risk. A tougher price control at the next reset is the single biggest downside variable."]},
 {a:"Santander",t:"Webster Financial",v:"$12.2bn",d:"Feb 2026",s:"FIG",r:"Cross-border",k:"Strategic",diff:3,
  angle:"Spanish bank buys further into US retail and commercial banking. Long-stated North America ambition finally funded.",
- curve:"Cross-border bank M&amp;A destroys value more often than not. Why do it?"},
+ curve:"Cross-border bank M&amp;A destroys value more often than not. Why do it?",
+ ans:["Because the alternative is worse: a domestic market with no growth and a home regulator that caps your ambition.",
+      "The honest case is diversification of earnings and currency, not synergies. There are almost no cost synergies across an ocean.",
+      "Track record is poor: RBS/ABN AMRO, HSBC/Household. The discipline test is whether they paid a control premium for that."]},
 {a:"Boston Scientific",t:"Penumbra",v:"$14.6bn",d:"Jan 2026",s:"Medtech",r:"US",k:"Strategic",diff:2,
  angle:"$374 a share, roughly 73% cash and 27% stock. Penumbra runs on as a standalone unit inside cardiovascular.",
- curve:"Why part-stock? What does the mix tell you about how the buyer sees its own valuation?"},
+ curve:"Why part-stock? What does the mix tell you about how the buyer sees its own valuation?",
+ ans:["Issuing stock says either you think your paper is expensive, or you want the target's holders to share the integration risk.",
+      "Cash is a cleaner signal of confidence but uses balance sheet capacity and is immediately dilutive to leverage ratios.",
+      "A 73/27 mix is usually about accretion maths and credit rating headroom rather than a grand statement about valuation."]},
 {a:"Sun Pharma",t:"Organon",v:"$11.75bn",d:"Apr 2026",s:"Pharma",r:"Cross-border",k:"Strategic",diff:2,
  angle:"India's largest pharma buys the Merck spin-off at $14.00 cash to build women's health and biosimilars.",
- curve:"The deck says 103% premium, one-day premium is ~24%. Which is honest and why?"},
+ curve:"The deck says 103% premium, one-day premium is ~24%. Which is honest and why?",
+ ans:["The one-day premium to the last undisturbed close is the standard, because it's the price before leaks moved the stock.",
+      "Measuring from a date weeks earlier flatters the deal by capturing the run-up on speculation you caused.",
+      "Best practice is to show both, plus a volume-weighted average over 30 or 90 days, so nobody can cherry-pick."]},
 {a:"Devon Energy",t:"Coterra Energy",v:"All-stock merger",d:"May 2026",s:"Energy",r:"US",k:"Merger",diff:2,
  angle:"Permian consolidation continues. Completed with an $8bn buyback attached, so the pitch is capital discipline not growth.",
- curve:"Why all-stock? What does that imply about where they think oil goes?"},
+ curve:"Why all-stock? What does that imply about where they think oil goes?",
+ ans:["All-stock shares commodity price risk. Neither side is betting the farm on a single price deck.",
+      "It also preserves the balance sheet, which matters when investors now reward returns of capital over production growth.",
+      "The subtext is that both boards think their own equity is roughly fairly valued relative to each other's."]},
 {a:"SpaceX",t:"xAI",v:"Undisclosed",d:"2026",s:"Tech",r:"US",k:"Related party",diff:3,
  angle:"The largest acquisition of a venture-backed company ever, and both sides were controlled by the same person.",
- curve:"No price, no exchange ratio, no independent committee disclosed. What's the governance problem?"},
+ curve:"No price, no exchange ratio, no independent committee disclosed. What's the governance problem?",
+ ans:["Both sides share a controlling shareholder, so there is nobody with an incentive to negotiate hard for minority holders.",
+      "Standard fix is a special committee of independent directors with its own bankers and lawyers, plus a majority-of-minority vote.",
+      "Without a disclosed price you can't test fairness at all, which matters most for the employees and funds holding the smaller side."]},
 {a:"Mari (Ari Emanuel)",t:"ATG Entertainment",v:"$6bn",d:"Aug 2026",s:"Live ent.",r:"Cross-border",k:"Sponsor exit",diff:3,
  angle:"Providence Equity exits the Broadway and West End theatre operator. Live experiences as a hard-to-replicate asset class.",
- curve:"How do you value a business whose inventory is seats on one specific night?"},
+ curve:"How do you value a business whose inventory is seats on one specific night?",
+ ans:["Two layers: the real estate, which is freehold theatres in irreplaceable locations, and the operating business.",
+      "The operating business is a hit-driven P&amp;L, so you normalise across a cycle rather than valuing a good year.",
+      "The durable value is ticketing data, ancillary spend per head and the ability to programme the venue year-round."]},
 {a:"AIG &amp; Onex",t:"Convex Group",v:"$7bn",d:"2026",s:"Insurance",r:"Cross-border",k:"Consortium",diff:3,
  angle:"A strategic carrier and a sponsor buying together. Specialty insurance capacity is the thing being acquired.",
- curve:"Why partner with a sponsor rather than buy it outright?"},
+ curve:"Why partner with a sponsor rather than buy it outright?",
+ ans:["Capital efficiency. The strategic gets the underwriting platform without consolidating the full balance sheet or capital charge.",
+      "It also caps the downside on a business the strategic may not fully understand, and speeds up regulatory approval.",
+      "Cost: shared control, a defined exit horizon, and eventual tension over reinvestment versus distributions."]},
 {a:"Madison Air",t:"Airflow Technologies",v:"$5.4bn",d:"Aug 2026",s:"Industrials",r:"US",k:"Strategic",diff:3,
  angle:"Air movement and filtration consolidation. Boring on the surface, very exposed to data centre cooling demand.",
- curve:"Which end market is really being bought here?"},
+ curve:"Which end market is really being bought here?",
+ ans:["Data centre thermal management. Cooling is the binding constraint on rack density, so it's a picks-and-shovels AI play.",
+      "Secondary drivers are indoor air quality regulation and industrial retrofit, which are steadier but slower.",
+      "The risk is concentration. If hyperscaler capex pauses, a boring industrial suddenly has a very cyclical order book."]},
 {a:"Deutsche Telekom",t:"Fiberhost &amp; Inea",v:"~€1bn",d:"Aug 2026",s:"Telecom",r:"Europe",k:"Infrastructure",diff:3,
  angle:"Buying Polish fibre from Macquarie. Telcos buying back the infrastructure funds bought from them a cycle ago.",
- curve:"Why did telcos sell their towers and fibre, and why are they buying it back?"},
+ curve:"Why did telcos sell their towers and fibre, and why are they buying it back?",
+ ans:["They sold to deleverage and to arbitrage the multiple gap: infra funds paid 20x+ EBITDA for assets inside a telco valued at 6x.",
+      "The cost was long-dated lease obligations, which converted owned assets into fixed operating costs.",
+      "Buying back happens where control of the network is strategic, or where infra valuations have fallen back toward the telco's own multiple."]},
 
-/* ---------- 2025 ---------- */
+/* ================= 2025 ================= */
 {a:"Union Pacific",t:"Norfolk Southern",v:"~$85bn",d:"Jul 2025",s:"Transport",r:"US",k:"Merger",diff:1,
  angle:"An attempt at America's first true transcontinental railroad. The largest deal of its year by some distance.",
- curve:"Surface Transportation Board approval. What's the public interest test?"},
+ curve:"Surface Transportation Board approval. What's the public interest test?",
+ ans:["Unlike normal antitrust, rail merger review asks whether the deal serves the public interest, a higher and vaguer bar.",
+      "The STB weighs service reliability, shipper rates and competitive access, and can impose conditions like reciprocal switching.",
+      "Shippers and unions get a formal voice, which is why these reviews run for years rather than months."]},
 {a:"Google",t:"Wiz",v:"$32bn",d:"Mar 2025",s:"Cyber",r:"US",k:"Strategic",diff:1,
  angle:"All cash for a cloud security business barely five years old. Google buying multi-cloud credibility it couldn't build.",
- curve:"$32bn on what revenue? Justify the multiple, then argue the other side."},
+ curve:"$32bn on what revenue? Justify the multiple, then argue the other side.",
+ ans:["Justify it on growth and strategic scarcity: fastest ARR ramp in software history, and cloud security is a gate to enterprise cloud spend.",
+      "For Google the alternative is losing cloud deals to AWS and Azure, so part of the price is defensive rather than standalone value.",
+      "Against: a triple-digit revenue multiple prices perfection, and security tools get commoditised or bundled by the hyperscalers themselves."]},
 {a:"Palo Alto Networks",t:"CyberArk",v:"~$25bn",d:"Jul 2025",s:"Cyber",r:"Cross-border",k:"Strategic",diff:2,
  angle:"Identity security bolted onto the platform. Consolidation of a security stack customers were tired of assembling themselves.",
- curve:"Platform consolidation versus best-of-breed. Which wins in enterprise software and why?"},
+ curve:"Platform consolidation versus best-of-breed. Which wins in enterprise software and why?",
+ ans:["Platform wins when budgets tighten and CISOs are managing too many vendors. Fewer contracts, one throat to choke.",
+      "Best-of-breed wins in fast-moving threat categories where a specialist ships faster than a suite.",
+      "The pattern historically: new category starts best-of-breed, gets absorbed into a platform once it matures. Identity is maturing."]},
 {a:"Charter Communications",t:"Cox Communications",v:"~$34.5bn",d:"May 2025",s:"Telecom",r:"US",k:"Merger",diff:2,
  angle:"Cable consolidating in a shrinking market. Scale to defend broadband against fixed wireless and fibre.",
- curve:"Is buying scale in a declining industry value creation or just slower decline?"},
+ curve:"Is buying scale in a declining industry value creation or just slower decline?",
+ ans:["It can be genuine value creation if cost synergies are real and the combined free cash flow funds deleveraging.",
+      "But scale doesn't fix the demand problem. If subscribers are leaving for fixed wireless, a bigger footprint just loses more of them.",
+      "The honest framing is a cash-return story: buy cheap, cut cost, hand cash back. Not a growth story."]},
 {a:"Constellation Energy",t:"Calpine",v:"~$26.6bn",d:"Jan 2025",s:"Power",r:"US",k:"Strategic",diff:2,
  angle:"Nuclear plus gas generation combined right as AI demand made dispatchable power the scarcest thing in the market.",
- curve:"Why is a power purchase agreement with a hyperscaler worth so much?"},
+ curve:"Why is a power purchase agreement with a hyperscaler worth so much?",
+ ans:["It converts merchant power, which is priced off volatile spot markets, into contracted revenue over 10 to 20 years.",
+      "Contracted cash flow gets a lower discount rate and supports more leverage, so the same megawatt is worth more.",
+      "Counterparty quality matters: an investment-grade tech company signing a two-decade contract is close to a bond."]},
 {a:"Global Payments",t:"Worldpay",v:"$24.25bn",d:"Apr 2025",s:"Fintech",r:"Cross-border",k:"Strategic",diff:2,
  angle:"Merchant acquiring consolidation, with an asset swap attached. Worldpay changes hands yet again.",
- curve:"Worldpay has been bought and sold repeatedly at wildly different values. What does that tell you?"},
+ curve:"Worldpay has been bought and sold repeatedly at wildly different values. What does that tell you?",
+ ans:["Merchant acquiring is scale-driven and low-margin, so ownership changes whenever someone thinks they can cut more cost.",
+      "Each owner underwrote synergies, extracted some, then found the underlying growth wasn't there and sold on.",
+      "The lesson: recurring serial ownership at falling multiples usually means the business is being disrupted, here by Stripe and Adyen."]},
 {a:"Abbott",t:"Exact Sciences",v:"$22.5bn",d:"Nov 2025",s:"Medtech",r:"US",k:"Strategic",diff:2,
  angle:"Cancer diagnostics at scale. Buying a screening franchise rather than waiting on internal R&amp;D.",
- curve:"Diagnostics reimbursement risk. How does that hit your DCF?"},
+ curve:"Diagnostics reimbursement risk. How does that hit your DCF?",
+ ans:["Price per test is set by payers, not the company, so a reimbursement cut hits revenue with no cost offset. Straight to margin.",
+      "Model it as a scenario on realised price per test, not as a bump to the discount rate. Rate fudges hide the actual sensitivity.",
+      "Volume upside from guideline inclusion can outweigh price cuts, so run price and volume as linked variables."]},
 {a:"Blackstone, ADIA, GIC &amp; TPG",t:"Hologic",v:"$18.4bn",d:"Oct 2025",s:"Healthcare",r:"US",k:"Consortium",diff:3,
  angle:"Club deal take-private of a women's health device maker. Sovereign wealth alongside two of the biggest sponsors.",
- curve:"Why club up? What does each member of that consortium actually bring?"},
+ curve:"Why club up? What does each member of that consortium actually bring?",
+ ans:["Cheque size. An $18bn take-private needs more equity than one fund can responsibly commit to a single name.",
+      "Sovereign wealth funds bring patient capital and a lower return hurdle, which supports a higher price.",
+      "Downside is governance friction and slower decisions, plus historically clubs have drawn antitrust and collusion scrutiny in auctions."]},
 {a:"Anglo American",t:"Teck Resources",v:"~$50bn",d:"Sep 2025",s:"Mining",r:"Cross-border",k:"Merger of equals",diff:2,
  angle:"Copper-led merger of equals, a year after Anglo fought off BHP. Structure and domicile mattered as much as price.",
- curve:"A merger of equals has no premium. So how do the boards sell it?"},
+ curve:"A merger of equals has no premium. So how do the boards sell it?",
+ ans:["On the exchange ratio and the pro-forma ownership split. That's where the value transfer actually happens.",
+      "Plus synergies both sets of shareholders share, and a claim that the combined entity re-rates on copper exposure.",
+      "Watch the soft terms: CEO, chair, headquarters, listing venue. Those tell you who really bought whom."]},
 {a:"Chevron",t:"Hess",v:"$53bn",d:"Closed Jul 2025",s:"Energy",r:"US",k:"Strategic",diff:1,
  angle:"Completed only after Exxon's arbitration claim over the Guyana asset failed. The prize was always Stabroek.",
- curve:"A right of first refusal nearly killed a $53bn deal. How do you diligence that?"},
+ curve:"A right of first refusal nearly killed a $53bn deal. How do you diligence that?",
+ ans:["Read the joint operating agreement early. Change-of-control and pre-emption clauses in JV contracts can be deal-determinative.",
+      "The disputed question was whether a corporate merger triggered a ROFR drafted for asset sales. Drafting, not economics.",
+      "Practically: legal diligence on partner consents should happen before you announce, not after, and you price the risk into the break fee."]},
 {a:"Nippon Steel",t:"U.S. Steel",v:"$14.9bn",d:"Closed Jun 2025",s:"Steel",r:"Cross-border",k:"Political",diff:2,
  angle:"Blocked, litigated, then cleared with a golden share for the US government. National security as deal terms.",
- curve:"What is CFIUS, and what does a golden share do to the buyer's control?"},
+ curve:"What is CFIUS, and what does a golden share do to the buyer's control?",
+ ans:["CFIUS reviews foreign investment for national security risk and can recommend blocking or impose mitigation agreements.",
+      "A golden share gives the government veto rights over specific decisions: plant closures, headquarters moves, capacity cuts.",
+      "You own the equity but not full control, so you should discount the value of synergies that require the vetoed actions."]},
 {a:"Synopsys",t:"Ansys",v:"$35bn",d:"Closed Jul 2025",s:"Software",r:"US",k:"Strategic",diff:2,
  angle:"Chip design software buys simulation. Took eighteen months and divestitures in two jurisdictions to get through.",
- curve:"Why do long regulatory timelines change the price a buyer is willing to pay?"},
+ curve:"Why do long regulatory timelines change the price a buyer is willing to pay?",
+ ans:["Time value: the synergies start eighteen months later, so their present value falls while the price is fixed at signing.",
+      "Business risk: the target is run in limbo, loses staff and defers decisions, so you buy a slightly worse asset than you diligenced.",
+      "It shifts negotiation to the terms, ticking fees, break fees, hell-or-high-water covenants, rather than the headline price."]},
 {a:"Capital One",t:"Discover",v:"~$35bn",d:"Closed May 2025",s:"FIG",r:"US",k:"Strategic",diff:1,
  angle:"An issuer buys a payments network. Vertical integration in cards, and the reason it cleared is the network.",
- curve:"Interchange economics. Who actually captures the value in a card transaction?"},
+ curve:"Interchange economics. Who actually captures the value in a card transaction?",
+ ans:["The merchant pays a merchant discount fee. Most of it is interchange, which goes to the issuing bank, not the network.",
+      "The network takes a smaller assessment and switching fee but with almost no credit risk and enormous operating leverage.",
+      "Owning both means Capital One keeps interchange and network economics on its own cards, and can undercut on merchant pricing."]},
 {a:"Mars",t:"Kellanova",v:"$36bn",d:"Closed 2025",s:"Consumer",r:"US",k:"Strategic",diff:2,
  angle:"Private family business buys a listed snacking company all cash. Pringles joins M&amp;Ms.",
- curve:"How does a private acquirer finance $36bn, and what's the advantage of no public shareholders?"},
+ curve:"How does a private acquirer finance $36bn, and what's the advantage of no public shareholders?",
+ ans:["Bank bridge financing at signing, refinanced into bonds. Mars has an investment-grade profile despite being private.",
+      "No quarterly EPS accretion test, so they can accept several years of dilution for a strategically right asset.",
+      "No shareholder vote and no activist pressure means they can pay a full price and integrate slowly."]},
 {a:"Kimberly-Clark",t:"Kenvue",v:"~$48.7bn",d:"Nov 2025",s:"Consumer health",r:"US",k:"Strategic",diff:2,
  angle:"Two years after being spun out of J&amp;J, Kenvue is bought. Tylenol litigation overhang priced into the deal.",
- curve:"How do you price litigation risk into an offer?"},
+ curve:"How do you price litigation risk into an offer?",
+ ans:["Estimate a probability-weighted range of settlement outcomes and deduct the present value from equity value.",
+      "Then structure around the residual: indemnities, escrow, or a contingent value right that pays out if claims come in light.",
+      "The uncomfortable truth is mass tort is close to unquantifiable, so buyers mainly demand a discount rather than model it precisely."]},
 {a:"Waters Corp",t:"BD Biosciences &amp; Diagnostics",v:"~$17.5bn",d:"Jul 2025",s:"Life sciences",r:"US",k:"Reverse Morris Trust",diff:3,
  angle:"A carve-out structured as a Reverse Morris Trust, so BD shareholders end up owning most of the combined company.",
- curve:"Explain a Reverse Morris Trust and why anyone bothers with the complexity."},
+ curve:"Explain a Reverse Morris Trust and why anyone bothers with the complexity.",
+ ans:["Parent spins the division to its own shareholders, who immediately merge it into the buyer, receiving buyer stock.",
+      "If the parent's shareholders end up with more than 50% of the combined entity, the separation is tax-free.",
+      "The cost is that the buyer's existing holders are diluted to a minority, so it only works when the target is large relative to the buyer."]},
 {a:"Pfizer",t:"Metsera",v:"~$10bn",d:"Nov 2025",s:"Pharma",r:"US",k:"Bidding war",diff:3,
  angle:"Won after a public fight with Novo Nordisk over an obesity drug developer. Price moved a long way from the first bid.",
- curve:"When should a board walk away from a contested auction?"},
+ curve:"When should a board walk away from a contested auction?",
+ ans:["When price passes your standalone value plus the synergies you can actually deliver. Past that you're transferring value to the seller.",
+      "Escalation of commitment is the real risk. Bankers get paid on completion, management get paid on ego.",
+      "Discipline mechanism: agree a walk-away number in writing before the process starts and make the board re-approve any increase."]},
 {a:"Novartis",t:"Avidity Biosciences",v:"~$12bn",d:"Oct 2025",s:"Biotech",r:"US",k:"Strategic",diff:3,
  angle:"Big pharma buying a clinical-stage platform to fill the patent cliff. No approved product, all pipeline.",
- curve:"How do you value a company with no revenue? Walk me through risk-adjusted NPV."},
+ curve:"How do you value a company with no revenue? Walk me through risk-adjusted NPV.",
+ ans:["Forecast peak sales per indication, then build a revenue curve from launch to patent expiry, minus costs.",
+      "Multiply each programme's cash flows by the probability of technical and regulatory success at its current phase, then discount.",
+      "Sum across the pipeline, add the platform's option value, subtract central costs. The answer is hugely sensitive to peak sales and probability."]},
 {a:"Baker Hughes",t:"Chart Industries",v:"$13.6bn",d:"2025",s:"Energy svcs",r:"US",k:"Strategic",diff:3,
  angle:"Gas technology and LNG equipment. Baker Hughes moving further from the drill bit toward industrial energy.",
- curve:"Is this diversification or diworsification? Argue both."},
+ curve:"Is this diversification or diworsification? Argue both.",
+ ans:["For: it shifts revenue from short-cycle drilling to long-cycle LNG and industrial gas, smoothing the cycle.",
+      "Against: shareholders can diversify themselves more cheaply than a company can, and conglomerates trade at a discount.",
+      "The tiebreaker is whether there's real operating overlap in engineering and aftermarket service, or just financial logic."]},
 {a:"Thoma Bravo",t:"Dayforce",v:"$12.3bn",d:"2025",s:"Software",r:"US",k:"Take-private",diff:3,
  angle:"HR software taken private. Recurring revenue and high gross margin, which is why software LBOs still clear.",
- curve:"How much leverage will lenders put on an ARR business, and on what metric?"},
+ curve:"How much leverage will lenders put on an ARR business, and on what metric?",
+ ans:["Not on EBITDA if the company is reinvesting heavily. Lenders often use ARR-based or recurring-revenue loans instead.",
+      "Underwriting looks at net revenue retention, gross churn and the gross margin, since those drive cash conversion at maturity.",
+      "The sponsor's plan is usually to cut sales and marketing to reveal the underlying EBITDA, then refinance onto a normal leverage multiple."]},
 {a:"Salesforce",t:"Informatica",v:"~$8bn",d:"2025",s:"Software",r:"US",k:"Strategic",diff:3,
  angle:"Data management bought to feed the AI layer. Salesforce returning to large M&amp;A after activist pressure to stop.",
- curve:"Activists told them to stop buying things. What changed the argument?"},
+ curve:"Activists told them to stop buying things. What changed the argument?",
+ ans:["Activists objected to serial dilutive M&amp;A with no margin discipline. Management responded with margin targets and buybacks.",
+      "Once margins improved and the buyback was running, a strategically necessary deal became defensible.",
+      "The AI argument helps: clean, governed data is a prerequisite for selling AI agents, so this is infrastructure not empire-building."]},
 {a:"DoorDash",t:"Deliveroo",v:"£2.9bn",d:"2025",s:"Consumer tech",r:"UK",k:"Cross-border",diff:2,
  angle:"US delivery platform takes out a London-listed one that never really recovered from its IPO price.",
- curve:"Deliveroo IPO'd at £3.90 and sold below it. What went wrong?"},
+ curve:"Deliveroo IPO'd at £3.90 and sold below it. What went wrong?",
+ ans:["Priced for a pandemic run-rate that normalised, with a dual-class structure UK institutions disliked and index funds couldn't buy.",
+      "Gig worker employment status was an unresolved legal risk sitting right in the cost base.",
+      "Structurally, delivery is a low-margin three-way split between platform, restaurant and rider, in a market with no local monopoly."]},
 {a:"Prosus",t:"Just Eat Takeaway",v:"€4.1bn",d:"2025",s:"Consumer tech",r:"Europe",k:"Take-private",diff:3,
  angle:"Delivery consolidation on the continent. Prosus deploying capital it struggles to spend elsewhere.",
- curve:"Why do food delivery businesses so rarely earn their cost of capital?"},
+ curve:"Why do food delivery businesses so rarely earn their cost of capital?",
+ ans:["Three-sided marketplace with no switching costs. Customers, restaurants and riders all multi-home on price.",
+      "Density is the only real moat. Below a threshold of orders per square mile, the unit economics never work.",
+      "That's why the winners are the ones with local monopolies, and why everyone else consolidates or exits."]},
 {a:"Qualcomm",t:"Alphawave",v:"$2.4bn",d:"2025",s:"Semis",r:"UK",k:"Cross-border",diff:3,
  angle:"Another UK-listed semiconductor business sold to a US buyer. Data centre connectivity IP is the asset.",
- curve:"Why can't London hold on to its semiconductor companies?"},
+ curve:"Why can't London hold on to its semiconductor companies?",
+ ans:["Valuation gap. US tech investors pay materially higher multiples for the same IP, so a US bidder always outbids the market.",
+      "Shallow domestic pool of specialist tech analysts and growth capital, so UK-listed tech gets mispriced and then bought.",
+      "Arm listing in New York rather than London was the clearest signal of the same problem."]},
 {a:"KKR",t:"Spectris",v:"£4.7bn",d:"2025",s:"Industrials",r:"UK",k:"Contested",diff:3,
  angle:"KKR outbid Advent for precision instruments. Two sponsors fighting over the same undervalued UK mid-cap.",
- curve:"Two sponsors, same asset, different price. What justifies the difference?"},
+ curve:"Two sponsors, same asset, different price. What justifies the difference?",
+ ans:["Different cost of capital and fund life, so different required IRRs on the same cash flows.",
+      "Different value creation plans: one may have a portfolio company to merge it with, giving synergies the other can't claim.",
+      "Sometimes it's just competitive dynamics. Winner's curse is real, and the loser is often the one who was right."]},
 {a:"Aviva",t:"Direct Line",v:"£3.7bn",d:"Closed Jul 2025",s:"Insurance",r:"UK",k:"Strategic",diff:2,
  angle:"UK motor and home insurance consolidation after an initial approach was publicly rejected as too low.",
- curve:"How do you model synergies in personal lines insurance without wrecking the combined ratio?"},
+ curve:"How do you model synergies in personal lines insurance without wrecking the combined ratio?",
+ ans:["Cost synergies come from overlapping claims handling, IT platforms, marketing spend and head office. Those are credible.",
+      "Revenue synergies are dangerous: cross-selling assumptions in insurance rarely land, and chasing volume means writing worse risk.",
+      "Watch customer attrition. Personal lines renew annually on price comparison sites, so integration disruption shows up fast."]},
 {a:"Sunoco",t:"Parkland",v:"~$9.1bn",d:"2025",s:"Energy",r:"Cross-border",k:"Strategic",diff:3,
  angle:"Fuel distribution consolidation into North America's largest independent. Structured partly through a new listed vehicle.",
- curve:"Why use a partnership structure? What's the tax logic?"},
+ curve:"Why use a partnership structure? What's the tax logic?",
+ ans:["Master limited partnerships aren't taxed at entity level, so cash flows pass through to unitholders without double taxation.",
+      "That raises after-tax yield, which lowers the cost of equity for stable, fee-like midstream and distribution assets.",
+      "Trade-off is complexity, restricted investor base, and less flexibility to retain earnings for growth."]},
 {a:"Bill Chisholm-led group",t:"Boston Celtics",v:"$6.1bn",d:"2025",s:"Sport",r:"US",k:"Sports",diff:2,
  angle:"Record NBA franchise price at the time, paid for a team with no owned arena. Media rights are the underlying asset.",
- curve:"You can't run a DCF on a trophy asset. So what are you actually paying for?"},
+ curve:"You can't run a DCF on a trophy asset. So what are you actually paying for?",
+ ans:["A share of a national media rights pool that resets upward every cycle, plus a closed league with no relegation and no new supply.",
+      "Local revenue you can grow: sponsorship, premium seating, and real estate around the venue if you control it.",
+      "And scarcity. Thirty franchises, a long queue of billionaires, so the exit multiple has historically taken care of itself."]},
 {a:"Mark Walter-led group",t:"Los Angeles Lakers",v:"~$10bn",d:"Jun 2025",s:"Sport",r:"US",k:"Sports",diff:2,
  angle:"Beat the Celtics record within months. The Buss family sells majority control after decades.",
- curve:"Franchise values compound faster than the S&amp;P. Is that sustainable or a bubble?"},
+ curve:"Franchise values compound faster than the S&amp;P. Is that sustainable or a bubble?",
+ ans:["The bull case is fixed supply, rising media rights, and new buyers in sovereign wealth and private equity now allowed in.",
+      "The bear case is that valuations are detached from operating cash flow and depend entirely on the next rights cycle rising again.",
+      "The honest answer: they're priced as scarce collectibles with an income stream attached, not as operating businesses."]},
 {a:"Woody Johnson",t:"43% of Crystal Palace",v:"~£190m",d:"2025",s:"Sport",r:"UK",k:"Sports",diff:3,
  angle:"Textor's stake sold after multi-club ownership rules put Palace's European place at risk. Governance forced the trade.",
- curve:"What is multi-club ownership and why is UEFA hostile to it?"},
+ curve:"What is multi-club ownership and why is UEFA hostile to it?",
+ ans:["One owner holding controlling or significant stakes in several clubs across different leagues, sharing scouting, players and infrastructure.",
+      "UEFA's concern is integrity: two clubs with common ownership in the same competition creates an obvious conflict.",
+      "The practical fix is selling down to a non-decisive stake or putting the holding in a blind trust before the deadline."]},
 {a:"Liberty Media",t:"Dorna (MotoGP)",v:"~€4.2bn",d:"Closed 2025",s:"Sport",r:"Europe",k:"Sports",diff:3,
  angle:"The Formula One owner buys motorcycle racing, cleared only after commitments to the European Commission.",
- curve:"What's the playbook Liberty ran on F1, and does it transfer?"},
+ curve:"What's the playbook Liberty ran on F1, and does it transfer?",
+ ans:["Open up the media rights, invest in the digital product, sell the sport as entertainment via documentary storytelling, expand into the US.",
+      "It transfers in principle: MotoGP is under-monetised outside southern Europe with a young global audience.",
+      "It transfers less well in scale. MotoGP's sponsorship base and race fees are a fraction of F1's, so the absolute upside is smaller."]},
 {a:"DAZN",t:"Foxtel",v:"A$3.4bn",d:"2025",s:"Media",r:"Cross-border",k:"Strategic",diff:3,
  angle:"Sports streamer buys a traditional pay-TV operator to get subscribers and rights in a new market.",
- curve:"Is buying legacy pay-TV a smart entry or an anchor?"},
+ curve:"Is buying legacy pay-TV a smart entry or an anchor?",
+ ans:["Smart if you're buying a subscriber base and rights portfolio far cheaper than acquiring customers directly.",
+      "Anchor if the declining linear business consumes management time and cash while churning faster than you can migrate users.",
+      "The test is migration rate: how many pay-TV subscribers convert to streaming before the linear base collapses."]},
+{a:"Sycamore Partners",t:"Walgreens Boots Alliance",v:"~$10bn",d:"2025",s:"Retail health",r:"US",k:"Take-private",diff:2,
+ angle:"A retail-focused sponsor takes private a chain that had lost most of its market value, with a breakup implied.",
+ curve:"What's the sponsor's actual plan for a business in structural decline?",
+ ans:["Break it up. US retail pharmacy, Boots in the UK, and the healthcare clinics are three different businesses with three different buyers.",
+      "Monetise real estate, since much of the value in a chain like this sits in owned property and leases rather than trading profit.",
+      "Risk is that reimbursement pressure keeps compressing pharmacy margin faster than costs can come out."]},
+{a:"3G Capital",t:"Skechers",v:"$9.4bn",d:"2025",s:"Consumer",r:"US",k:"Take-private",diff:3,
+ angle:"The zero-based budgeting house takes a founder-led footwear brand private at a substantial premium.",
+ curve:"3G is famous for cost cutting. Does that work on a consumer brand?",
+ ans:["It worked spectacularly on beer and initially on Kraft Heinz, where scale and procurement dominate.",
+      "It failed on Kraft Heinz longer term because cutting brand investment hollowed out the thing that generated the pricing power.",
+      "For footwear, marketing and design are the moat, so the risk of over-cutting is higher than in a commodity food business."]},
+{a:"Keurig Dr Pepper",t:"JDE Peet's",v:"~$18bn",d:"2025",s:"Consumer",r:"Cross-border",k:"Strategic",diff:3,
+ angle:"Coffee consolidation with an announced plan to then split the combined group into two separate companies.",
+ curve:"Buy it, then break yourself up. Is that coherent?",
+ ans:["It can be. You acquire to get scale in coffee, then separate so each half gets the right investor base and multiple.",
+      "Coffee is a slow-growth cash generator, refreshment is a growth business. Bundled, both get mispriced.",
+      "Sceptics point out you're paying investment banking fees twice and taking dis-synergies in shared corporate costs."]},
+{a:"Ferrero",t:"WK Kellogg",v:"$3.1bn",d:"2025",s:"Consumer",r:"Cross-border",k:"Strategic",diff:3,
+ angle:"The Nutella owner buys North American cereal, a declining category, at a big premium to the undisturbed price.",
+ curve:"Why pay a premium for a declining category?",
+ ans:["Declining volume with strong brands still throws off cash, and a private family buyer doesn't need reported growth.",
+      "Distribution and manufacturing overlap in North America gives Ferrero scale it currently lacks in the grocery channel.",
+      "The premium reflects a scarcity of large branded food assets, not a belief that cereal is coming back."]},
+{a:"Dick's Sporting Goods",t:"Foot Locker",v:"~$2.4bn",d:"2025",s:"Retail",r:"US",k:"Strategic",diff:3,
+ angle:"Big-box sports retail buys a struggling sneaker specialist, betting it can fix the relationship with Nike.",
+ curve:"Horizontal retail M&amp;A rarely works. What's different here?",
+ ans:["The claimed edge is supplier leverage. Combined, they're a much more important customer to Nike and Adidas.",
+      "Different formats and locations mean limited cannibalisation, so it's a footprint extension not a duplication.",
+      "Against: Foot Locker's problem is that brands are going direct to consumer, and buying it doesn't reverse that."]},
+{a:"Prada",t:"Versace",v:"€1.25bn",d:"2025",s:"Luxury",r:"Europe",k:"Strategic",diff:3,
+ angle:"Italian luxury consolidation. Capri sells at a fraction of what it paid, after its own sale to Tapestry was blocked.",
+ curve:"Capri paid far more for Versace. Why the write-down?",
+ ans:["Brand heat is perishable. Versace under-invested and lost pricing power while the aspirational luxury customer pulled back.",
+      "Capri also needed liquidity after the Tapestry deal was blocked, which weakens you as a seller.",
+      "Prada's thesis is that Italian ownership and its own manufacturing base can restore the brand over a decade."]},
+{a:"Coinbase",t:"Deribit",v:"~$2.9bn",d:"2025",s:"Crypto",r:"Cross-border",k:"Strategic",diff:3,
+ angle:"The largest crypto exchange acquisition to date, buying an offshore derivatives venue to add options and futures.",
+ curve:"Why buy a derivatives venue rather than build one?",
+ ans:["Liquidity is the product in derivatives, and liquidity begets liquidity. You cannot bootstrap an order book from zero.",
+      "Existing open interest, market makers and non-US regulatory permissions come with the asset and take years to build.",
+      "Risk is regulatory: acquiring an offshore venue imports jurisdictional complexity into a US-listed company."]},
+{a:"Rocket Companies",t:"Mr. Cooper",v:"~$9.4bn",d:"2025",s:"FIG",r:"US",k:"All-stock",diff:3,
+ angle:"Mortgage originator buys a large servicer, pairing an origination platform with a servicing book.",
+ curve:"Why does an originator want a servicing portfolio?",
+ ans:["Natural hedge. When rates rise, origination volumes collapse but servicing rights gain value, and vice versa.",
+      "Servicing is also a customer list. When rates fall, you refinance your own borrowers instead of paying to acquire them.",
+      "Risk is that servicing rights are volatile mark-to-model assets and hedging them badly has killed lenders before."]},
+{a:"Merck",t:"Verona Pharma",v:"~$10bn",d:"2025",s:"Pharma",r:"UK",k:"Cross-border",diff:3,
+ angle:"US pharma buys a UK-listed respiratory company with a newly approved COPD treatment.",
+ curve:"Why buy just after approval rather than before?",
+ ans:["Regulatory risk is gone, which is the biggest single binary in biotech, so the buyer pays for certainty.",
+      "But you pay for it. Pre-approval you'd get a discount for the risk you're now no longer taking.",
+      "Big pharma with a patent cliff and cash on hand generally prefers de-risked assets it can push through its existing salesforce."]},
+{a:"Sanofi",t:"Blueprint Medicines",v:"~$9.5bn",d:"2025",s:"Pharma",r:"Cross-border",k:"Strategic",diff:3,
+ angle:"Buying a rare disease and immunology franchise with a commercial product, plus a contingent value right on the pipeline.",
+ curve:"What's a contingent value right and why include one?",
+ ans:["A CVR pays the target's shareholders extra if defined milestones hit, usually approval or a sales threshold.",
+      "It bridges a valuation gap: the seller believes in the pipeline, the buyer won't pay for it upfront.",
+      "Downside is CVRs are illiquid, often disputed, and historically most expire worthless, so sellers discount them heavily."]},
+{a:"Emerson Electric",t:"Aspen Technology",v:"~$7.2bn",d:"2025",s:"Software",r:"US",k:"Minority buy-in",diff:3,
+ angle:"Buying in the minority stake in a controlled subsidiary to take full ownership of industrial software.",
+ curve:"A controlling holder buying out minorities. Where's the conflict?",
+ ans:["The controller sets the timing and knows the business better, so it can bid when the minority stake is cheap.",
+      "Protections are a special committee of independent directors and often a majority-of-the-minority approval condition.",
+      "Minorities have limited leverage: they can't sell to anyone else because the control block makes a rival bid impossible."]},
+{a:"Nippon Life",t:"Resolution Life",v:"~$8.2bn",d:"Closed 2025",s:"Insurance",r:"Cross-border",k:"Strategic",diff:3,
+ angle:"Japanese life insurer buys a run-off consolidator, gaining a platform for closed blocks of life business.",
+ curve:"Why is a business in run-off worth buying?",
+ ans:["Closed blocks generate predictable cash as reserves release, with no new business strain or acquisition costs.",
+      "The skill is capital and asset management: reprice the investment portfolio and cut administration cost per policy.",
+      "It's essentially a spread business, so the value depends on the assets backing the liabilities, not on selling more policies."]},
 
-/* ---------- 2024 and still asked ---------- */
+/* ================= 2024 and still asked ================= */
 {a:"Skydance Media",t:"Paramount Global",v:"~$8bn",d:"Closed Aug 2025",s:"Media",r:"US",k:"Control deal",diff:2,
  angle:"Ellison family buys National Amusements to control Paramount. A controlled-company sale, so minorities had little say.",
- curve:"Dual-class shares. Who got paid what, and was it fair?"},
-{a:"Cisco",t:"Splunk",v:"$28bn",d:"Closed Mar 2024",s:"Software",r:"US",k:"Strategic",diff:2,
- angle:"Networking buys observability and security data. Cisco's largest deal ever, funded largely with offshore cash and debt.",
- curve:"How does a cash-rich acquirer decide between buybacks and a $28bn acquisition?"},
-{a:"Diamondback Energy",t:"Endeavor Energy",v:"~$26bn",d:"2024",s:"Energy",r:"US",k:"Strategic",diff:3,
- angle:"The last big private Permian operator sells. Shale consolidation from a fragmented industry to a handful of names.",
- curve:"Value a shale producer. Why does PV-10 matter more than EBITDA?"},
-{a:"ConocoPhillips",t:"Marathon Oil",v:"$22.5bn",d:"2024",s:"Energy",r:"US",k:"All-stock",diff:3,
- angle:"All-stock, no premium panic, sold as cost synergies and inventory depth rather than a bet on the oil price.",
- curve:"All-stock in a cyclical. What does the exchange ratio protect against?"},
-{a:"Home Depot",t:"SRS Distribution",v:"$18.25bn",d:"2024",s:"Distribution",r:"US",k:"Strategic",diff:3,
- angle:"Retailer buys its way into the professional contractor channel rather than trying to win it store by store.",
- curve:"Retail versus distribution economics. Which has better returns on capital and why?"},
+ curve:"Dual-class shares. Who got paid what, and was it fair?",
+ ans:["The controlling holder sold the voting block at a premium per share versus what the non-voting holders received.",
+      "That premium is the control premium, and in a controlled company it accrues to the controller, not to everyone.",
+      "It's legal but contested. Delaware case law requires entire fairness review where a controller stands on both sides."]},
+{a:"Broadcom",t:"VMware",v:"$69bn",d:"Closed Nov 2023",s:"Software",r:"US",k:"Strategic",diff:1,
+ angle:"Semiconductor company buys enterprise software, then aggressively repriced licences and cut the customer base.",
+ curve:"Broadcom's model is buy, raise prices, cut costs. Why doesn't the market punish that?",
+ ans:["Because it works on mission-critical infrastructure software with high switching costs. Customers complain and renew anyway.",
+      "They concentrate on the largest thousand accounts and let the long tail go, which raises margin dramatically.",
+      "The risk is a decade out: over-milked products lose to alternatives once customers finish a painful migration."]},
+{a:"Microsoft",t:"Activision Blizzard",v:"$69bn",d:"Closed Oct 2023",s:"Gaming",r:"Cross-border",k:"Strategic",diff:1,
+ angle:"Cleared only after the CMA initially blocked it and Microsoft restructured the cloud gaming rights for the UK.",
+ curve:"The CMA blocked it, then approved a restructured deal. What actually changed?",
+ ans:["The theory of harm was cloud gaming, not consoles. The CMA feared Microsoft controlling both content and the leading cloud platform.",
+      "Microsoft divested the cloud streaming rights outside the EEA to Ubisoft, which removed the foreclosure concern.",
+      "Lesson: identify the specific theory of harm early and design a structural remedy for it, rather than offering behavioural promises."]},
+{a:"Adobe",t:"Figma",v:"$20bn (abandoned)",d:"Dec 2023",s:"Software",r:"Cross-border",k:"Failed",diff:2,
+ angle:"Abandoned in the face of UK and EU opposition. Adobe paid a $1bn break fee and Figma stayed independent.",
+ curve:"A $1bn break fee. How do you decide what a reverse termination fee should be?",
+ ans:["It prices the regulatory risk the buyer is asking the target to accept by taking itself off the market for a year or more.",
+      "Sized against the target's standalone damage: lost momentum, distracted staff, competitors briefing against them.",
+      "Roughly 4-6% of deal value is typical for high antitrust risk. Higher fees signal the buyer knows approval is doubtful."]},
+{a:"Kroger",t:"Albertsons",v:"$24.6bn (blocked)",d:"Blocked Dec 2024",s:"Grocery",r:"US",k:"Failed",diff:2,
+ angle:"Blocked in court despite a large proposed divestiture package. The two then sued each other.",
+ curve:"They offered divestitures and still lost. Why did the remedy fail?",
+ ans:["Courts want a buyer who can actually compete. The proposed divestiture buyer was judged too weak to sustain the stores.",
+      "Precedent was against them: an earlier Albertsons divestiture buyer went bankrupt, so judges had seen this film.",
+      "Also a labour market theory of harm, that fewer employers means lower grocery worker wages, which is harder to remedy structurally."]},
+{a:"Tapestry",t:"Capri Holdings",v:"$8.5bn (blocked)",d:"Blocked Nov 2024",s:"Luxury",r:"US",k:"Failed",diff:2,
+ angle:"Blocked on a narrow market definition of accessible luxury handbags. Both stocks then moved in opposite directions.",
+ curve:"Market definition decided this case. How would you have argued it?",
+ ans:["The FTC drew a narrow market of accessible luxury handbags, where Coach, Michael Kors and Kate Spade dominate.",
+      "The defence should be that consumers substitute freely across price points and channels, so the market is all handbags.",
+      "It shows market definition is usually the whole case in merger litigation. Win that and the share numbers take care of themselves."]},
+{a:"JetBlue",t:"Spirit Airlines",v:"$3.8bn (blocked)",d:"Blocked Jan 2024",s:"Airlines",r:"US",k:"Failed",diff:3,
+ angle:"Blocked on the grounds that removing an ultra-low-cost carrier would raise fares. Spirit later filed for bankruptcy.",
+ curve:"Spirit went bankrupt anyway. Was the block still the right call?",
+ ans:["The failing firm defence exists but the bar is high: you must show imminent failure and no less anticompetitive buyer.",
+      "JetBlue couldn't clear it at the time, and courts are wary of a defence that rewards letting a rival deteriorate.",
+      "With hindsight the consumer harm may have happened anyway, which is the standard critique of static merger analysis."]},
+{a:"Exxon Mobil",t:"Pioneer Natural Resources",v:"$59.5bn",d:"Closed May 2024",s:"Energy",r:"US",k:"All-stock",diff:1,
+ angle:"The deal that started the Permian consolidation wave. All-stock, with an FTC condition on the target's founder.",
+ curve:"Why did the FTC clear a $60bn oil merger but bar an individual from the board?",
+ ans:["The overlap in a fragmented shale market wasn't enough to block, so there was no structural competition problem.",
+      "The concern was conduct: alleged communications with OPEC about restraining output, which is coordination not concentration.",
+      "So the remedy was personal rather than structural, which was unusual and shows regulators using narrow tools creatively."]},
+{a:"Occidental Petroleum",t:"CrownRock",v:"~$12bn",d:"2024",s:"Energy",r:"US",k:"Strategic",diff:3,
+ angle:"Bolt-on Permian acreage funded largely with debt, on a balance sheet still carrying the Anadarko hangover.",
+ curve:"They were still deleveraging from the last deal. Justify the timing.",
+ ans:["Contiguous acreage next to existing operations rarely comes up, so the scarcity argues against waiting.",
+      "Longer laterals and shared infrastructure mean genuine per-barrel cost reduction, not just added volume.",
+      "Against: layering debt onto a levered balance sheet in a cyclical commodity is exactly how Anadarko nearly broke them."]},
+{a:"Bunge",t:"Viterra",v:"~$18bn",d:"Closed 2025",s:"Agri",r:"Cross-border",k:"Merger",diff:3,
+ angle:"Agricultural trading consolidation, taking two years to clear multiple jurisdictions including China and Canada.",
+ curve:"Why do agricultural mergers attract so much political attention?",
+ ans:["Food security. Governments care about who controls grain export capacity, especially post-Ukraine.",
+      "Farmers are politically organised and argue that fewer buyers means lower farmgate prices, a monopsony argument.",
+      "Approval therefore comes with undertakings on facilities and pricing conduct rather than pure market share fixes."]},
+{a:"Rio Tinto",t:"Arcadium Lithium",v:"$6.7bn",d:"2024",s:"Mining",r:"Cross-border",k:"Strategic",diff:3,
+ angle:"A major buying into lithium near the bottom of the price cycle rather than at the top.",
+ curve:"Buying a commodity producer when the price has collapsed. Smart or catching a knife?",
+ ans:["Smart if your view is structural demand growth and current prices are below the marginal cost of new supply.",
+      "Majors have the balance sheet to fund development through a downturn, which the target could not do alone.",
+      "The knife risk is that lithium isn't geologically scarce, so new supply responds fast and the cycle stays low for years."]},
+{a:"Glencore",t:"Teck's EVR coal business",v:"$6.9bn",d:"2024",s:"Mining",r:"Cross-border",k:"Carve-out",diff:3,
+ angle:"Buying steelmaking coal that other majors were divesting on ESG grounds, then keeping rather than spinning it.",
+ curve:"Everyone else is exiting coal. Why buy it?",
+ ans:["Divestment by the majors reduced competition for the asset, so the entry price was low relative to cash flow.",
+      "Steelmaking coal has no scaled substitute in blast furnace production yet, so demand is stickier than thermal coal.",
+      "The counterargument is a rising cost of capital, since some investors and lenders simply won't fund coal exposure."]},
+{a:"BlackRock",t:"Global Infrastructure Partners",v:"$12.5bn",d:"2024",s:"Asset mgmt",r:"US",k:"Strategic",diff:2,
+ angle:"The world's largest passive manager buying its way into private markets fee streams.",
+ curve:"Why is the biggest passive house buying an alternatives manager?",
+ ans:["Fee rate. Passive earns single-digit basis points, infrastructure earns management plus performance fees on locked-up capital.",
+      "Private markets money is sticky for a decade, which smooths revenue versus ETF flows that can reverse in a week.",
+      "It's also a hedge: if fee compression continues in passive, alternatives is where the profit pool moves."]},
+{a:"BlackRock",t:"HPS Investment Partners",v:"~$12bn",d:"2024",s:"Asset mgmt",r:"US",k:"Strategic",diff:3,
+ angle:"Private credit added to the same buildout, alongside a data business, in the space of a single year.",
+ curve:"Three big acquisitions in a year. What's the integration risk in asset management?",
+ ans:["The assets walk out of the door every evening. Retaining investment teams is the whole deal, hence long earn-outs.",
+      "Culture clash between a listed index giant and a partnership-style credit shop is the standard failure mode.",
+      "Client concentration matters too: overlapping LPs may reduce their combined allocation rather than double it."]},
+{a:"IBM",t:"HashiCorp",v:"$6.4bn",d:"Closed 2025",s:"Software",r:"US",k:"Strategic",diff:3,
+ angle:"Infrastructure automation bought to sit alongside Red Hat in the hybrid cloud stack.",
+ curve:"HashiCorp had changed its open source licence just before. Does that matter to a buyer?",
+ ans:["Yes. The licence change protected commercial revenue from cloud providers reselling the product for free.",
+      "But it triggered a community fork, so you're buying a business whose developer goodwill has been partly spent.",
+      "For an enterprise buyer that's tolerable, because the customers are large firms on paid support, not hobbyists."]},
+{a:"AMD",t:"ZT Systems",v:"$4.9bn",d:"2024",s:"Semis",r:"US",k:"Strategic",diff:3,
+ angle:"Buying rack-scale server design capability to compete with Nvidia at the system level, then selling the manufacturing arm.",
+ curve:"Buy the whole company, sell the factory. Why that structure?",
+ ans:["They wanted the design and systems engineering talent, not the low-margin contract manufacturing.",
+      "Keeping manufacturing would have put AMD in competition with its own server OEM customers, a channel conflict.",
+      "So the plan was always buy, carve, divest. It's cheaper than trying to buy a design team in a hot labour market."]},
+{a:"Thoma Bravo",t:"Darktrace",v:"~$5.3bn",d:"2024",s:"Cyber",r:"UK",k:"Take-private",diff:3,
+ angle:"UK cyber security taken private after years of short-seller attacks and accounting questions dogged the share price.",
+ curve:"Public market scepticism kept the price down. Why is a sponsor comfortable?",
+ ans:["A sponsor does its own forensic diligence and can get comfortable privately in a way a public shareholder can't.",
+      "Without a quarterly narrative to manage, you can fix go-to-market and revenue recognition out of the spotlight.",
+      "And the discount is the opportunity. Persistent public scepticism is precisely what creates a cheap entry multiple."]},
+{a:"CVC-led consortium",t:"Hargreaves Lansdown",v:"£5.4bn",d:"2024",s:"FIG",r:"UK",k:"Take-private",diff:3,
+ angle:"The UK's largest retail investment platform taken private after the founders backed a consortium bid.",
+ curve:"Founder shareholders backing a bid. Help or hindrance for other holders?",
+ ans:["Help in that a large committed stake makes the deal deliverable, so there's less completion risk.",
+      "Hindrance in that founders may roll over into the new vehicle, giving them interests different from those cashing out.",
+      "The Takeover Code handles this by requiring rollover holders to be excluded from the independent shareholder vote."]},
+{a:"Carlsberg",t:"Britvic",v:"£3.3bn",d:"2024",s:"Beverages",r:"UK",k:"Cross-border",diff:3,
+ angle:"Danish brewer buys UK soft drinks after two rejected approaches, adding a Pepsi bottling relationship.",
+ curve:"Why does a brewer want soft drinks?",
+ ans:["Shared route to market. The same trucks, the same pubs and the same buyers at the supermarkets.",
+      "Category hedge as beer volumes decline and no-and-low alcohol grows, so it diversifies the portfolio toward growth.",
+      "Complication: the Pepsi bottling agreement is a third-party contract, so a change of control needs the franchisor's blessing."]},
+{a:"REA Group",t:"Rightmove",v:"£6.2bn (withdrawn)",d:"Sep 2024",s:"Internet",r:"UK",k:"Failed",diff:3,
+ angle:"Four proposals, all rejected, then walked away under UK put-up-or-shut-up rules without going hostile.",
+ curve:"What is the put up or shut up deadline and how does it shape UK bid tactics?",
+ ans:["Under the Takeover Code a named potential bidder has 28 days to make a firm offer or walk away for six months.",
+      "It stops targets being besieged indefinitely, and it gives the target board a clock to run down if it wants to resist.",
+      "Bidders respond by pre-wiring shareholder support or by bumping late, right before the deadline, to force engagement."]},
+{a:"Primary Health Properties",t:"Assura",v:"~£1.8bn",d:"2025",s:"Real estate",r:"UK",k:"Contested",diff:3,
+ angle:"A listed rival beat a KKR-led cash consortium for a GP surgery landlord by offering shares plus cash.",
+ curve:"Cash from a sponsor versus paper from a rival. How does a board choose?",
+ ans:["Cash is certain and immediate. Paper offers continued exposure to the upside and any synergies, but carries market risk.",
+      "Boards must consider deliverability: financing conditions, regulatory approvals and whether the paper is liquid enough to sell.",
+      "Shareholder mix matters. Income funds wanting a continuing dividend stream may prefer paper in a merged REIT."]},
+{a:"Honeywell",t:"Johnson Matthey Catalyst Technologies",v:"£1.8bn",d:"2025",s:"Industrials",r:"UK",k:"Carve-out",diff:3,
+ angle:"A division sold off under activist pressure, with the proceeds largely returned to shareholders.",
+ curve:"Sell a division and hand back the cash. Why not reinvest it?",
+ ans:["Because the market was giving no credit for the division inside the group, so a sale crystallises value immediately.",
+      "Returning cash is a signal of discipline when management's reinvestment track record is what the activist attacked.",
+      "The counterargument is that you're shrinking to greatness, and eventually you run out of things to sell."]},
+{a:"Alimentation Couche-Tard",t:"Seven &amp; i Holdings",v:"~$47bn (withdrawn)",d:"Jul 2025",s:"Retail",r:"Cross-border",k:"Failed",diff:2,
+ angle:"The largest ever attempted foreign takeover of a Japanese company, abandoned after a year of limited engagement.",
+ curve:"Japan changed its M&amp;A guidelines to encourage bids. So why did this fail?",
+ ans:["The 2023 METI guidelines require boards to consider bona fide offers seriously, but they aren't legally binding.",
+      "The target ran a defensive playbook: a management buyout attempt, asset sales and a slow disclosure process.",
+      "It shows the gap between policy intent and practice. Cultural resistance and cross-shareholdings still block unsolicited foreign bids."]},
+{a:"Toyota Industries",t:"Take-private by Toyota group",v:"~$33bn",d:"2025",s:"Industrials",r:"Japan",k:"Governance",diff:3,
+ angle:"Unwinding a cross-shareholding structure by taking the listed affiliate private, at a price minorities disputed.",
+ curve:"What is the parent-subsidiary listing problem in Japan?",
+ ans:["A listed subsidiary controlled by a listed parent creates a structural conflict, since the parent can extract value from minorities.",
+      "The Tokyo Stock Exchange has been pressing companies to unwind these structures and cross-shareholdings generally.",
+      "The fight is always over price. Minorities argue the controller times the buyout when the subsidiary is undervalued."]},
+{a:"Honda",t:"Nissan (merger talks)",v:"Collapsed",d:"Feb 2025",s:"Autos",r:"Japan",k:"Failed",diff:2,
+ angle:"Talks to create the world's third-largest carmaker collapsed within two months over control and structure.",
+ curve:"Why did a strategically logical merger die so fast?",
+ ans:["The proposed structure shifted from a merger of equals to Nissan becoming a subsidiary, which Nissan's board rejected.",
+      "Overlapping plants and dealer networks meant painful restructuring neither side's stakeholders would accept.",
+      "The strategic logic was real, the governance was impossible. That's the usual cause of death for merger-of-equals talks."]},
+{a:"NTT",t:"NTT Data (minorities)",v:"~¥2.4tn",d:"2025",s:"Telecom IT",r:"Japan",k:"Minority buy-in",diff:3,
+ angle:"Another parent buying in a listed subsidiary, this time to fund data centre and AI investment without market scrutiny.",
+ curve:"Why take a profitable listed subsidiary private?",
+ ans:["Capital allocation freedom. Multi-year data centre capex crushes near-term earnings, which listed minorities punish.",
+      "Full ownership means all the cash flow funds the group plan and there's no conflict on intra-group pricing.",
+      "It also removes the governance criticism of running a parent and subsidiary listed side by side."]},
+{a:"Novo Holdings",t:"Catalent",v:"$16.5bn",d:"Closed 2024",s:"Pharma svcs",r:"Cross-border",k:"Related party",diff:3,
+ angle:"The controlling foundation of Novo Nordisk bought a contract manufacturer and sold key sites to Novo Nordisk itself.",
+ curve:"The parent foundation buys, then sells sites to the operating company. Any problem with that?",
+ ans:["It's a related party transaction, so the price and process face scrutiny from Novo Nordisk's minority shareholders.",
+      "The commercial logic is clear: securing fill-finish capacity for obesity drugs was a genuine bottleneck.",
+      "Regulators looked at whether removing capacity available to rivals foreclosed competition in the same drug class."]},
+{a:"Johnson &amp; Johnson",t:"Shockwave Medical",v:"$13.1bn",d:"2024",s:"Medtech",r:"US",k:"Strategic",diff:3,
+ angle:"Buying intravascular lithotripsy, a fast-growing cardiovascular device category, at a high revenue multiple.",
+ curve:"Device companies pay huge multiples for single-product businesses. Why?",
+ ans:["Devices with a strong clinical dataset and physician preference have durable share and pricing, unlike drugs facing patents cliffs.",
+      "A large salesforce can push the product into far more hospitals than the target could reach alone, so revenue synergies are credible.",
+      "Risk is single-product concentration: a competing technology or a reimbursement change hits all the value at once."]},
+{a:"Chesapeake Energy",t:"Southwestern Energy",v:"$7.4bn",d:"2024",s:"Energy",r:"US",k:"Merger",diff:3,
+ angle:"All-stock merger creating Expand Energy, the largest US natural gas producer, timed at the bottom of gas prices.",
+ curve:"Merging two gas producers when gas prices are on the floor. What's the thesis?",
+ ans:["LNG export capacity coming online plus data centre power demand should lift structural US gas demand.",
+      "Combined, they can flex production up and down more cheaply and hold inventory for a better price environment.",
+      "All-stock means neither side crystallises a low valuation in cash, so it's a bet made with shared currency."]},
+{a:"Hewlett Packard Enterprise",t:"Juniper Networks",v:"$14bn",d:"Closed 2025",s:"Networking",r:"US",k:"Strategic",diff:3,
+ angle:"Cleared only after a Department of Justice settlement requiring a divestiture and an auction of a software licence.",
+ curve:"A settlement with a divestiture plus a licence auction. Why the unusual remedy?",
+ ans:["The concern was concentration in enterprise wireless networking, where the two were close competitors.",
+      "Divesting a business line addresses the overlap directly, the classic structural remedy.",
+      "Auctioning source code licences aims to create a new competitor, which is more creative and harder to police."]},
 {a:"Silver Lake",t:"Endeavor Group",v:"~$13bn",d:"2024",s:"Sport &amp; media",r:"US",k:"Take-private",diff:2,
  angle:"Sponsor takes private the owner of WME, IMG and a controlling stake in TKO. The sum of the parts was never credited.",
- curve:"Conglomerate discount. How would you break this one up?"},
+ curve:"Conglomerate discount. How would you break this one up?",
+ ans:["Separate the annuity-like assets from the people businesses: TKO's media rights on one side, the talent agency on the other.",
+      "Rights and events attract infrastructure-style capital at high multiples. Agencies are people businesses valued far lower.",
+      "The discount exists because no single investor wants both, so splitting matches each asset to its natural buyer."]},
 {a:"International Paper",t:"DS Smith",v:"£5.8bn",d:"2024",s:"Packaging",r:"UK",k:"Contested",diff:3,
  angle:"US buyer beat Mondi for a FTSE 100 packaging business. Sustainable packaging demand plus transatlantic scale.",
- curve:"Paper versus plastic packaging. Where is the structural growth?"},
+ curve:"Paper versus plastic packaging. Where is the structural growth?",
+ ans:["Corrugated and fibre-based packaging benefits from plastic regulation and e-commerce volume growth.",
+      "But it's a commodity with capacity cycles, so pricing depends on containerboard supply, not just the ESG narrative.",
+      "Value comes from integration: owning the mill and the box plant lets you capture margin across the chain."]},
 {a:"Vodafone",t:"Three UK",v:"£15bn merger",d:"Completed 2025",s:"Telecom",r:"UK",k:"Merger",diff:2,
  angle:"Four UK mobile networks become three, cleared with binding commitments on pricing and network investment.",
- curve:"Regulators blocked four-to-three for years. What argument finally worked?"},
+ curve:"Regulators blocked four-to-three for years. What argument finally worked?",
+ ans:["An investment-based case: neither operator could fund a national 5G rollout alone, so consolidation buys network quality.",
+      "They accepted binding, time-limited commitments on retail tariffs and a legally enforceable capex plan.",
+      "It marks a shift in regulatory thinking from static price effects toward dynamic investment effects."]},
 {a:"Barratt Developments",t:"Redrow",v:"£2.5bn",d:"2024",s:"Housebuilding",r:"UK",k:"All-share",diff:3,
  angle:"All-share merger of UK housebuilders in a weak market, cleared after a CMA review nobody expected to be difficult.",
- curve:"How do you value a housebuilder? Why is the land bank the whole model?"},
+ curve:"How do you value a housebuilder? Why is the land bank the whole model?",
+ ans:["Net asset value and price to tangible book dominate, because the balance sheet is land and work in progress.",
+      "Land is bought years ahead, so today's margin reflects land bought in a different market. Timing the land cycle is the business.",
+      "Also watch return on capital employed, since housebuilders can flatter margins by holding land longer."]},
 {a:"Saks Global",t:"Neiman Marcus",v:"$2.65bn",d:"2024",s:"Retail",r:"US",k:"Strategic",diff:3,
  angle:"Luxury department stores combine, with Amazon and Salesforce taking minority stakes in the buyer.",
- curve:"Why would Amazon want equity in a struggling department store?"},
+ curve:"Why would Amazon want equity in a struggling department store?",
+ ans:["Access to luxury brands that have refused to sell on Amazon, using the department store as an intermediary.",
+      "A technology and logistics services relationship, where the equity aligns both sides on a commercial contract.",
+      "It's a small, optional bet on a category Amazon has repeatedly failed to crack directly."]},
+{a:"INEOS (Ratcliffe)",t:"~27% of Manchester United",v:"$1.3bn",d:"2024",s:"Sport",r:"UK",k:"Minority stake",diff:2,
+ angle:"A minority stake purchase that came with full control of football operations, after a full sale process found no buyer at the price.",
+ curve:"Why buy a minority stake but negotiate operational control?",
+ ans:["The Glazers wanted liquidity without fully exiting, so a full takeover at their price was never available.",
+      "Control rights over football operations were carved out contractually, separating economic ownership from operational control.",
+      "For the buyer it's cheaper exposure, but you're a minority in a controlled company, which is a weak governance position."]},
+{a:"Friedkin Group",t:"Everton",v:"Undisclosed",d:"2024",s:"Sport",r:"UK",k:"Distressed",diff:3,
+ angle:"A distressed club purchase with a part-built stadium, heavy debt to lenders and a previous deal having collapsed.",
+ curve:"What are you actually buying when you buy a Premier League club in distress?",
+ ans:["A share of the collective broadcast pool, which is the real recurring revenue and is roughly the same for everyone.",
+      "A new stadium asset that transforms matchday and commercial revenue, which is why the timing mattered here.",
+      "And a contingent liability stack: transfer fees payable, debt, and profitability and sustainability rules constraining spend."]},
+{a:"Nasdaq",t:"Adenza",v:"$10.5bn",d:"Closed 2023",s:"Fintech",r:"US",k:"Strategic",diff:3,
+ angle:"An exchange buying regulatory and risk software from a sponsor, shifting the mix away from transaction revenue.",
+ curve:"Why do exchanges want software revenue?",
+ ans:["Trading volumes are cyclical and fee-compressed. Software and data are recurring subscriptions with better margins.",
+      "Investors pay a higher multiple for recurring revenue than for volume-linked revenue, so the mix shift re-rates the stock.",
+      "Risk is paying a software multiple with exchange cash flows, and the debt taken on to do it."]},
+{a:"Blackstone &amp; Vista",t:"Smartsheet",v:"$8.4bn",d:"2024",s:"Software",r:"US",k:"Take-private",diff:3,
+ angle:"Work management software taken private by two sponsors as public markets stopped paying for growth without profit.",
+ curve:"Why did the market stop paying up for growth software in 2024?",
+ ans:["Rates rose, so long-duration cash flows got discounted harder. Growth at any cost stopped being rewarded.",
+      "Investors moved to the rule of 40, requiring growth plus margin, which many high-growth names couldn't meet.",
+      "That gap between public and private valuation is exactly what created the take-private wave."]},
 
-/* ---------- deals that died: interviewers love these ---------- */
+/* ================= deals that died ================= */
 {a:"BBVA",t:"Banco Sabadell",v:"~€13bn (lapsed)",d:"Lapsed Oct 2025",s:"FIG",r:"Spain",k:"Failed hostile",diff:2,
  angle:"Europe's highest-profile hostile bank bid in years, taken straight to shareholders and rejected on acceptances.",
- curve:"Why did a hostile go to shareholders and still fail? What would you have changed?"},
+ curve:"Why did a hostile go to shareholders and still fail? What would you have changed?",
+ ans:["The exchange ratio was set early and the target's share price ran above it, so the offer became economically unattractive.",
+      "The government imposed conditions restricting integration for years, which gutted the synergy case investors were being sold.",
+      "Fix: build in a value-protection mechanism or bump early. A stale all-share ratio in a rising market kills hostile bids."]},
 {a:"BHP",t:"Anglo American",v:"£39bn (withdrawn)",d:"2024",s:"Mining",r:"UK",k:"Failed",diff:2,
  angle:"Three rejected proposals, all conditional on Anglo unbundling its South African units first. Structure killed it, not price.",
- curve:"Why was the demerger condition unacceptable to the Anglo board?"},
+ curve:"Why was the demerger condition unacceptable to the Anglo board?",
+ ans:["It put all the execution and regulatory risk of two complex South African demergers onto Anglo's shareholders before any payday.",
+      "South African political and regulatory approval was uncertain, so the condition could have left them with nothing.",
+      "Anglo's answer was to run the restructuring itself, capture the value, and negotiate later from a stronger position."]},
 {a:"UniCredit",t:"Commerzbank",v:"Stake building",d:"Ongoing",s:"FIG",r:"Europe",k:"Creeping bid",diff:3,
  angle:"A stake accumulated partly through derivatives while Berlin objects. A takeover conducted at arm's length, slowly.",
- curve:"How do you build a stake with derivatives, and when must you disclose?"},
-{a:"Elliott Management",t:"various UK plc",v:"Activist",d:"Ongoing",s:"Activism",r:"UK",k:"Activist",diff:3,
- angle:"Not an acquisition. Activists forcing breakups and sales, which is where a lot of UK M&amp;A now originates.",
- curve:"How does an activist actually force a board to sell?"},
+ curve:"How do you build a stake with derivatives, and when must you disclose?",
+ ans:["Cash-settled equity swaps give economic exposure without voting rights, and historically sat outside some disclosure regimes.",
+      "Most European regimes now require disclosure of such instruments at the same thresholds as shares, typically from 5%.",
+      "Converting the swaps to actual shares needs banking regulator approval above 10%, which is where the political fight happens."]},
 {a:"Novo Nordisk",t:"Metsera (outbid)",v:"Outbid",d:"Nov 2025",s:"Pharma",r:"Cross-border",k:"Failed",diff:3,
  angle:"The losing side of a public bidding war, including a restructured offer that drew antitrust objections.",
- curve:"You lose an auction. What do you tell your board the next morning?"}
+ curve:"You lose an auction. What do you tell your board the next morning?",
+ ans:["That walking away at your reserve was the right decision, and show the price the winner paid against your valuation.",
+      "Then present the alternatives: the next best target, an in-licensing deal, or accelerating the internal programme.",
+      "The worst outcome is winning badly. Losing disciplined is a defensible result if the reserve was properly set."]},
+{a:"Amazon",t:"iRobot",v:"$1.4bn (abandoned)",d:"Jan 2024",s:"Consumer tech",r:"US",k:"Failed",diff:3,
+ angle:"Abandoned in the face of EU opposition. iRobot then cut its workforce and its share price collapsed.",
+ curve:"What was the competition theory against a retailer buying a vacuum maker?",
+ ans:["Self-preferencing. Amazon controls the marketplace where rival robot vacuums are sold and could disadvantage them.",
+      "Plus data: the mapping data from home robots feeding a company that already knows your purchases.",
+      "It's an ecosystem theory rather than a market share one, which is where European enforcement has moved."]},
+{a:"Elliott Management",t:"various UK plc",v:"Activist",d:"Ongoing",s:"Activism",r:"UK",k:"Activist",diff:3,
+ angle:"Not an acquisition. Activists forcing breakups and sales, which is where a lot of UK M&amp;A now originates.",
+ curve:"How does an activist actually force a board to sell?",
+ ans:["Build a stake, publish a thesis, then win over the long-only institutions who already own most of the register.",
+      "Escalate to board seats or a requisitioned general meeting, which most boards settle before it reaches a vote.",
+      "The real leverage is reputational. Directors fear a public campaign and ISS or Glass Lewis recommending against them."]}
 ];
 
 /* ---------- state ---------- */
 const F = {region:"all", type:"all", diff:"all"};
 let pool = [], used = new Set(), current = null, spinning = false;
-
 const $ = id => document.getElementById(id);
 
-/* ---------- filters ---------- */
 const FILTERS = [
-  {label:"Region", key:"region", opts:[["all","Everything"],["UK","UK"],["Europe","Europe"],["US","US"],["Cross-border","Cross-border"]]},
+  {label:"Region", key:"region", opts:[["all","Everything"],["UK","UK"],["Europe","Europe"],["US","US"],["Japan","Japan"],["Cross-border","Cross-border"]]},
   {label:"Flavour", key:"type", opts:[["all","Any"],["sponsor","Sponsor / take-private"],["failed","Deals that died"],["sport","Sport &amp; media"],["mega","Above $20bn"]]},
   {label:"Heat", key:"diff", opts:[["all","Any"],["1","Warm-up"],["2","Standard"],["3","Deep cut"]]}
 ];
@@ -497,33 +864,23 @@ const FILTERS = [
 function buildFilters(){
   const box = $("filters");
   FILTERS.forEach(f=>{
-    const lab = document.createElement("span");
-    lab.className="fgroup"; lab.textContent=f.label;
-    box.appendChild(lab);
+    const lab=document.createElement("span"); lab.className="fgroup"; lab.textContent=f.label; box.appendChild(lab);
     f.opts.forEach(([val,txt])=>{
       const b=document.createElement("button");
-      b.className="chip"; b.innerHTML=txt;
-      b.setAttribute("aria-pressed", F[f.key]===val);
-      b.onclick=()=>{
-        F[f.key]=val;
-        [...box.querySelectorAll(".chip")].forEach(c=>{});
-        buildPool(); refreshChips();
-      };
-      b.dataset.key=f.key; b.dataset.val=val;
+      b.className="chip"; b.innerHTML=txt; b.dataset.key=f.key; b.dataset.val=val;
+      b.onclick=()=>{ F[f.key]=val; buildPool(); refreshChips(); };
       box.appendChild(b);
     });
   });
 }
 function refreshChips(){
-  [...document.querySelectorAll(".chip")].forEach(c=>{
-    c.setAttribute("aria-pressed", F[c.dataset.key]===c.dataset.val);
-  });
+  [...document.querySelectorAll(".chip")].forEach(c=> c.setAttribute("aria-pressed", F[c.dataset.key]===c.dataset.val));
 }
-
 function num(v){
-  const m = String(v).replace(/,/g,"").match(/([\d.]+)\s*(bn|m)/i);
+  const m=String(v).replace(/,/g,"").match(/([\d.]+)\s*(bn|tn|m)/i);
   if(!m) return 0;
-  return parseFloat(m[1]) * (m[2].toLowerCase()==="bn" ? 1000 : 1);
+  const u=m[2].toLowerCase();
+  return parseFloat(m[1]) * (u==="tn"?1000000:u==="bn"?1000:1);
 }
 function matches(d){
   if(F.region!=="all" && d.r!==F.region) return false;
@@ -537,11 +894,9 @@ function matches(d){
 function buildPool(){
   pool = DEALS.filter(matches);
   $("poolCount").textContent = pool.length;
-  if(pool.length===0) $("phasehint").textContent = "no deals match those filters — loosen one";
-  else if(!spinning) $("phasehint").textContent = "pull the lever to start";
+  if(pool.length===0) $("phasehint").textContent="no deals match those filters, loosen one";
+  else if(!spinning) $("phasehint").textContent="pull the lever to start";
 }
-
-/* ---------- the pull ---------- */
 function pick(){
   let avail = pool.filter(d=>!used.has(d.a+d.t));
   if(avail.length===0){ used.clear(); avail = pool; }
@@ -550,120 +905,98 @@ function pick(){
   used.add(d.a+d.t);
   return d;
 }
-
 function pull(){
   if(spinning) return;
   const deal = pick();
-  if(!deal){ $("phasehint").textContent = "nothing in the pool — change the filters"; return; }
-  current = deal;
-  spinning = true;
+  if(!deal){ $("phasehint").textContent="nothing in the pool, change the filters"; return; }
+  current=deal; spinning=true;
   $("lever").classList.add("pulled");
-  setTimeout(()=>$("lever").classList.remove("pulled"), 220);
+  setTimeout(()=>$("lever").classList.remove("pulled"),220);
   $("slip").classList.remove("on");
-
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const cols = [
-    {r:$("r1"), v:$("v1"), field:"a", stop: reduce?120:620},
-    {r:$("r2"), v:$("v2"), field:"t", stop: reduce?160:980},
-    {r:$("r3"), v:$("v3"), field:"v", stop: reduce?200:1340}
+  const cols=[
+    {r:$("r1"),v:$("v1"),field:"a",stop:reduce?120:620},
+    {r:$("r2"),v:$("v2"),field:"t",stop:reduce?160:980},
+    {r:$("r3"),v:$("v3"),field:"v",stop:reduce?200:1340}
   ];
   cols.forEach(c=>{
     c.r.classList.add("spin");
-    const iv = setInterval(()=>{
-      const rnd = DEALS[Math.floor(Math.random()*DEALS.length)];
-      c.v.innerHTML = rnd[c.field];
-    }, 55);
+    const iv=setInterval(()=>{
+      const rnd=DEALS[Math.floor(Math.random()*DEALS.length)];
+      c.v.innerHTML=rnd[c.field];
+    },55);
     setTimeout(()=>{
-      clearInterval(iv);
-      c.r.classList.remove("spin");
-      c.v.innerHTML = deal[c.field];
-      if(c.field==="v"){ land(deal); }
+      clearInterval(iv); c.r.classList.remove("spin"); c.v.innerHTML=deal[c.field];
+      if(c.field==="v") land(deal);
     }, c.stop);
   });
 }
-
 function land(deal){
-  spinning = false;
-  $("pulled").textContent = used.size;
-  const tags = [deal.d, deal.s, deal.r, deal.k];
-  $("tags").innerHTML = tags.map((t,i)=>
-    `<span class="tag${i===3?' hot':''}">${t}</span>`).join("");
-  $("angle").innerHTML = deal.angle;
-  const cv = $("curve");
-  cv.innerHTML = deal.curve;
-  cv.classList.add("hidden-until");
+  spinning=false;
+  $("pulled").textContent=used.size;
+  $("tags").innerHTML=[deal.d,deal.s,deal.r,deal.k]
+    .map((t,i)=>`<span class="tag${i===3?' hot':''}">${t}</span>`).join("");
+  $("angle").innerHTML=deal.angle;
+  const cv=$("curve"); cv.innerHTML=deal.curve; cv.classList.add("veil");
+  const ml=$("model");
+  ml.innerHTML=(deal.ans||[]).map(x=>`<li>${x}</li>`).join("");
+  ml.classList.remove("on");
+  $("modelbtn").textContent="What good sounds like";
   $("slip").classList.add("on");
-  resetClock();
-  startClock();
+  resetClock(); startClock();
 }
+$("curve").addEventListener("click", e=> e.currentTarget.classList.toggle("veil"));
+$("modelbtn").addEventListener("click", ()=>{
+  const ml=$("model"); const on=ml.classList.toggle("on");
+  $("modelbtn").textContent = on ? "Hide the answer" : "What good sounds like";
+  if(on) $("curve").classList.remove("veil");
+});
 
-$("curve").addEventListener("click", e=> e.currentTarget.classList.toggle("hidden-until"));
-
-/* ---------- clock ---------- */
-const RESEARCH = 10*60, PITCH = 60;
+const RESEARCH=10*60, PITCH=60;
 let phase="idle", left=RESEARCH, tick=null;
-
-function fmt(s){ const m=Math.floor(s/60); const r=s%60; return m+":"+String(r).padStart(2,"0"); }
+function fmt(s){ return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); }
 function paint(){
-  $("clock").textContent = fmt(left);
-  $("clock").className = "clock" + (phase==="pitch"?" pitch":"") + (phase==="done"?" done":"");
-  $("phase").textContent = phase==="research" ? "researching" : phase==="pitch" ? "pitch — out loud" : phase;
+  $("clock").textContent=fmt(left);
+  $("clock").className="clock"+(phase==="pitch"?" pitch":"")+(phase==="done"?" done":"");
+  $("phase").textContent = phase==="research"?"researching":phase==="pitch"?"pitch, out loud":phase;
 }
 function startClock(){
   if(tick) return;
   if(phase==="idle"||phase==="done"){ phase="research"; left=RESEARCH; }
   $("startBtn").textContent="Pause";
-  $("phasehint").textContent = "build a view, don't read a summary";
-  tick = setInterval(()=>{
+  $("phasehint").textContent="build a view, don't read a summary";
+  tick=setInterval(()=>{
     left--;
     if(left<=0){
       if(phase==="research"){ phase="pitch"; left=PITCH; $("phasehint").textContent="stand up. 60 seconds. no notes."; }
-      else { phase="done"; left=0; clearInterval(tick); tick=null; $("startBtn").textContent="Start"; $("phasehint").textContent="time. pull again."; }
+      else { phase="done"; left=0; clearInterval(tick); tick=null; $("startBtn").textContent="Start"; $("phasehint").textContent="time. now check the model answer."; }
     }
     paint();
   },1000);
   paint();
 }
-function pauseClock(){
-  clearInterval(tick); tick=null; $("startBtn").textContent="Start";
-  $("phasehint").textContent="paused";
-}
-function resetClock(){
-  clearInterval(tick); tick=null; phase="research"; left=RESEARCH;
-  $("startBtn").textContent="Start"; paint();
-}
-$("startBtn").onclick = ()=> tick ? pauseClock() : startClock();
-$("resetBtn").onclick = ()=>{ resetClock(); $("phasehint").textContent="clock reset"; };
-$("skipBtn").onclick = ()=>{
-  clearInterval(tick); tick=null; phase="pitch"; left=PITCH; paint(); startClock();
-};
-$("lever").onclick = pull;
-
+function pauseClock(){ clearInterval(tick); tick=null; $("startBtn").textContent="Start"; $("phasehint").textContent="paused"; }
+function resetClock(){ clearInterval(tick); tick=null; phase="research"; left=RESEARCH; $("startBtn").textContent="Start"; paint(); }
+$("startBtn").onclick=()=> tick?pauseClock():startClock();
+$("resetBtn").onclick=()=>{ resetClock(); $("phasehint").textContent="clock reset"; };
+$("skipBtn").onclick=()=>{ clearInterval(tick); tick=null; phase="pitch"; left=PITCH; paint(); startClock(); };
+$("lever").onclick=pull;
 document.addEventListener("keydown", e=>{
   if(e.target.tagName==="INPUT") return;
   if(e.code==="Space"){ e.preventDefault(); pull(); }
-  if(e.key==="s"){ tick ? pauseClock() : startClock(); }
+  if(e.key==="s"){ tick?pauseClock():startClock(); }
   if(e.key==="r"){ resetClock(); }
 });
-
-/* ---------- the book ---------- */
 function renderTable(q=""){
-  const s = q.toLowerCase();
-  const rows = DEALS
-    .filter(d => !s || (d.a+d.t+d.s+d.d+d.k+d.r).toLowerCase().includes(s))
-    .map(d=>`<tr><td class="n">${d.d}</td><td>${d.a}</td><td>${d.t}</td><td class="n">${d.v}</td><td>${d.s}</td><td>${d.k}</td></tr>`)
-    .join("");
-  $("tbody").innerHTML = rows || `<tr><td colspan="6" style="color:#7FA394">nothing matches that</td></tr>`;
+  const s=q.toLowerCase();
+  const rows=DEALS.filter(d=>!s||(d.a+d.t+d.s+d.d+d.k+d.r).toLowerCase().includes(s))
+    .map(d=>`<tr><td class="n">${d.d}</td><td>${d.a}</td><td>${d.t}</td><td class="n">${d.v}</td><td>${d.s}</td><td>${d.k}</td></tr>`).join("");
+  $("tbody").innerHTML=rows||`<tr><td colspan="6" style="color:#7FA394">nothing matches that</td></tr>`;
 }
 $("search").addEventListener("input", e=>renderTable(e.target.value));
 
-/* ---------- boot ---------- */
-$("deckCount").textContent = DEALS.length;
-buildFilters();
-refreshChips();
-buildPool();
-renderTable();
-paint();
+$("deckCount").textContent=DEALS.length;
+buildFilters(); refreshChips(); buildPool(); renderTable(); paint();
 </script>
 </body>
 </html>
